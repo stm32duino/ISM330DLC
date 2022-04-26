@@ -62,12 +62,6 @@
 #define ISM330DLC_GYRO_SENSITIVITY_FOR_FS_1000DPS  35.000  /**< Sensitivity value for 1000 dps full scale [mdps/LSB] */
 #define ISM330DLC_GYRO_SENSITIVITY_FOR_FS_2000DPS  70.000  /**< Sensitivity value for 2000 dps full scale [mdps/LSB] */
 
-#define ISM330DLC_PEDOMETER_THRESHOLD_LOW       0x00  /**< Lowest  value of pedometer threshold */
-#define ISM330DLC_PEDOMETER_THRESHOLD_MID_LOW   0x07
-#define ISM330DLC_PEDOMETER_THRESHOLD_MID       0x0F
-#define ISM330DLC_PEDOMETER_THRESHOLD_MID_HIGH  0x17
-#define ISM330DLC_PEDOMETER_THRESHOLD_HIGH      0x1F  /**< Highest value of pedometer threshold */
-
 #define ISM330DLC_WAKE_UP_THRESHOLD_LOW       0x01  /**< Lowest  value of wake up threshold */
 #define ISM330DLC_WAKE_UP_THRESHOLD_MID_LOW   0x0F
 #define ISM330DLC_WAKE_UP_THRESHOLD_MID       0x1F
@@ -117,7 +111,6 @@ typedef struct
   unsigned int TapStatus : 1;
   unsigned int DoubleTapStatus : 1;
   unsigned int WakeUpStatus : 1;
-  unsigned int StepStatus : 1;
   unsigned int TiltStatus : 1;
   unsigned int D6DOrientationStatus : 1;
 } ISM330DLC_Event_Status_t;
@@ -158,11 +151,6 @@ class ISM330DLCSensor
     ISM330DLCStatusTypeDef Enable_Free_Fall_Detection   (ISM330DLC_Interrupt_Pin_t int_pin);
     ISM330DLCStatusTypeDef Disable_Free_Fall_Detection  (void);
     ISM330DLCStatusTypeDef Set_Free_Fall_Threshold      (uint8_t thr);
-    ISM330DLCStatusTypeDef Enable_Pedometer             (void);
-    ISM330DLCStatusTypeDef Disable_Pedometer            (void);
-    ISM330DLCStatusTypeDef Get_Step_Counter             (uint16_t *step_count);
-    ISM330DLCStatusTypeDef Reset_Step_Counter           (void);
-    ISM330DLCStatusTypeDef Set_Pedometer_Threshold      (uint8_t thr);
     ISM330DLCStatusTypeDef Enable_Tilt_Detection        (void);
     ISM330DLCStatusTypeDef Enable_Tilt_Detection        (ISM330DLC_Interrupt_Pin_t int_pin);
     ISM330DLCStatusTypeDef Disable_Tilt_Detection       (void);
