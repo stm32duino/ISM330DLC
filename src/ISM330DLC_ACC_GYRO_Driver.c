@@ -3505,84 +3505,6 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SOFT(void *handle, ISM330DLC_ACC_GYRO_SOFT_t 
 }
 
 /*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_W_SignifcantMotion
-* Description    : Write SIGN_MOTION_EN
-* Input          : ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t
-* Output         : None
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t  ISM330DLC_ACC_GYRO_W_SignifcantMotion(void *handle, ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t newValue)
-{
-  u8_t value;
-
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, &value, 1) )
-    return MEMS_ERROR;
-
-  value &= ~ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_MASK;
-  value |= newValue;
-
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, &value, 1) )
-    return MEMS_ERROR;
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_SignifcantMotion
-* Description    : Read SIGN_MOTION_EN
-* Input          : Pointer to ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t
-* Output         : Status of SIGN_MOTION_EN see ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_SignifcantMotion(void *handle, ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_W_PedoStepReset
-* Description    : Write PEDO_RST_STEP
-* Input          : ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t
-* Output         : None
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t  ISM330DLC_ACC_GYRO_W_PedoStepReset(void *handle, ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t newValue)
-{
-  u8_t value;
-
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, &value, 1) )
-    return MEMS_ERROR;
-
-  value &= ~ISM330DLC_ACC_GYRO_PEDO_RST_STEP_MASK;
-  value |= newValue;
-
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, &value, 1) )
-    return MEMS_ERROR;
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_PedoStepReset
-* Description    : Read PEDO_RST_STEP
-* Input          : Pointer to ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t
-* Output         : Status of PEDO_RST_STEP see ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_PedoStepReset(void *handle, ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_PEDO_RST_STEP_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-/*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_W_TILT
 * Description    : Write XEN_G
 * Input          : ISM330DLC_ACC_GYRO_TILT_G_t
@@ -3618,45 +3540,6 @@ mems_status_t ISM330DLC_ACC_GYRO_R_TILT(void *handle, ISM330DLC_ACC_GYRO_TILT_G_
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_TILT_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_W_PEDO
-* Description    : Write PEDO_EN
-* Input          : ISM330DLC_ACC_GYRO_PEDO_t
-* Output         : None
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t  ISM330DLC_ACC_GYRO_W_PEDO(void *handle, ISM330DLC_ACC_GYRO_PEDO_t newValue)
-{
-  u8_t value;
-
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, &value, 1) )
-    return MEMS_ERROR;
-
-  value &= ~ISM330DLC_ACC_GYRO_PEDO_MASK;
-  value |= newValue;
-
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, &value, 1) )
-    return MEMS_ERROR;
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_PEDO
-* Description    : Read PEDO_EN
-* Input          : Pointer to ISM330DLC_ACC_GYRO_PEDO_t
-* Output         : Status of PEDO_EN see ISM330DLC_ACC_GYRO_PEDO_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_PEDO(void *handle, ISM330DLC_ACC_GYRO_PEDO_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL10_C, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_PEDO_MASK; //mask
 
   return MEMS_SUCCESS;
 }
@@ -4591,57 +4474,6 @@ mems_status_t ISM330DLC_ACC_GYRO_R_HardIron(void *handle, ISM330DLC_ACC_GYRO_SOF
 }
 
 /*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_STEP_OVERFLOW
-* Description    : Read STEP_OVERFLOW
-* Input          : Pointer to ISM330DLC_ACC_GYRO_STEP_OVERFLOW_t
-* Output         : Status of STEP_OVERFLOW see ISM330DLC_ACC_GYRO_STEP_OVERFLOW_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_OVERFLOW(void *handle, ISM330DLC_ACC_GYRO_STEP_OVERFLOW_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_STEP_OVERFLOW_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_STEP_COUNT_DELTA
-* Description    : Read STEP_COUNT_DELTA_IA
-* Input          : Pointer to ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_t
-* Output         : Status of STEP_COUNT_DELTA_IA see ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_COUNT_DELTA(void *handle, ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_PEDO_EV_STATUS
-* Description    : Read PEDO_EV_STATUS
-* Input          : Pointer to ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_t
-* Output         : Status of PEDO_EV_STATUS see ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_PEDO_EV_STATUS(void *handle, ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_R_TILT_EV_STATUS
 * Description    : Read TILT_EV_STATUS
 * Input          : Pointer to ISM330DLC_ACC_GYRO_TILT_EV_STATUS_t
@@ -4654,23 +4486,6 @@ mems_status_t ISM330DLC_ACC_GYRO_R_TILT_EV_STATUS(void *handle, ISM330DLC_ACC_GY
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_TILT_EV_STATUS_MASK; //mask
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_R_SIGN_MOT_EV_STATUS
-* Description    : Read SIGN_MOT_EV_STATUS
-* Input          : Pointer to ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_t
-* Output         : Status of SIGN_MOT_EV_STATUS see ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_SIGN_MOT_EV_STATUS(void *handle, ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_t *value)
-{
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
-    return MEMS_ERROR;
-
-  *value &= ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_MASK; //mask
 
   return MEMS_SUCCESS;
 }
@@ -6188,63 +6003,6 @@ mems_status_t ISM330DLC_ACC_GYRO_Get_GetTimestamp(void *handle, u8_t *buff)
 		k++;
 	}
   }
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : mems_status_t ISM330DLC_ACC_GYRO_Get_GetStepCounter(u8_t *buff)
-* Description    : Read GetStepCounter output register
-* Input          : pointer to [u8_t]
-* Output         : GetStepCounter buffer u8_t
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_Get_GetStepCounter(void *handle, u8_t *buff)
-{
-  u8_t i, j, k;
-  u8_t numberOfByteForDimension;
-
-  numberOfByteForDimension=2/1;
-
-  k=0;
-  for (i=0; i<1;i++ )
-  {
-	for (j=0; j<numberOfByteForDimension;j++ )
-	{
-		if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_STEP_COUNTER_L+k, &buff[k], 1))
-		  return MEMS_ERROR;
-		k++;
-	}
-  }
-
-  return MEMS_SUCCESS;
-}
-
-/*******************************************************************************
-* Function Name  : ISM330DLC_ACC_GYRO_W_PedoThreshold(void *handle, u8_t newValue)
-* Description    : Set accelerometer threshold for pedometer
-* Input          : pointer to [u8_t]
-* Output         : None
-* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
-*******************************************************************************/
-mems_status_t  ISM330DLC_ACC_GYRO_W_PedoThreshold(void *handle, u8_t newValue)
-{
-  u8_t value;
-
-  /* Open Embedded Function Register page*/
-  ISM330DLC_ACC_GYRO_W_EmbeddedAccess(handle, ISM330DLC_ACC_GYRO_EMBEDDED_ACCESS_ENABLED);
-
-  /* read current value */
-  ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CONFIG_PEDO_THS_MIN, &value, 1);
-
-  value &= ~0x1F;
-  value |= (newValue & 0x1F);
-
-  /* write new value */
-  ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CONFIG_PEDO_THS_MIN, &value, 1);
-
-  /* Close Embedded Function Register page*/
-  ISM330DLC_ACC_GYRO_W_EmbeddedAccess(handle, ISM330DLC_ACC_GYRO_EMBEDDED_ACCESS_DISABLED);
 
   return MEMS_SUCCESS;
 }

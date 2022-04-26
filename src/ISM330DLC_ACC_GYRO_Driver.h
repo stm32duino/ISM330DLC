@@ -171,12 +171,6 @@ typedef enum {
 #define ISM330DLC_ACC_GYRO_TIMESTAMP1_REG  	0X41
 #define ISM330DLC_ACC_GYRO_TIMESTAMP2_REG  	0X42
 
-#define ISM330DLC_ACC_GYRO_TIMESTAMP_L  	0X49
-#define ISM330DLC_ACC_GYRO_TIMESTAMP_H  	0X4A
-
-#define ISM330DLC_ACC_GYRO_STEP_COUNTER_L  	0X4B
-#define ISM330DLC_ACC_GYRO_STEP_COUNTER_H  	0X4C
-
 #define ISM330DLC_ACC_GYRO_SENSORHUB13_REG  	0X4D
 #define ISM330DLC_ACC_GYRO_SENSORHUB14_REG  	0X4E
 #define ISM330DLC_ACC_GYRO_SENSORHUB15_REG  	0X4F
@@ -1487,36 +1481,6 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SOFT(void *handle, ISM330DLC_ACC_GYRO_SOFT_t 
 /*******************************************************************************
 * Register      : CTRL10_C
 * Address       : 0X19
-* Bit Group Name: SIGN_MOTION_EN
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_ENABLED 		 =0x01,
-} ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t;
-
-#define  	ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_SignifcantMotion(void *handle, ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_SignifcantMotion(void *handle, ISM330DLC_ACC_GYRO_SIGN_MOTION_EN_t *value);
-
-/*******************************************************************************
-* Register      : CTRL10_C
-* Address       : 0X19
-* Bit Group Name: PEDO_RST_STEP
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_PEDO_RST_STEP_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_PEDO_RST_STEP_ENABLED 		 =0x02,
-} ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t;
-
-#define  	ISM330DLC_ACC_GYRO_PEDO_RST_STEP_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_PedoStepReset(void *handle, ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_PedoStepReset(void *handle, ISM330DLC_ACC_GYRO_PEDO_RST_STEP_t *value);
-
-/*******************************************************************************
-* Register      : CTRL10_C
-* Address       : 0X19
 * Bit Group Name: FUNC_EN
 * Permission    : RW
 *******************************************************************************/
@@ -1543,21 +1507,6 @@ typedef enum {
 #define  	ISM330DLC_ACC_GYRO_TILT_MASK  	0x08
 mems_status_t  ISM330DLC_ACC_GYRO_W_TILT(void *handle, ISM330DLC_ACC_GYRO_TILT_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TILT(void *handle, ISM330DLC_ACC_GYRO_TILT_G_t *value);
-
-/*******************************************************************************
-* Register      : CTRL10_C
-* Address       : 0X19
-* Bit Group Name: PEDO_EN
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_PEDO_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_PEDO_ENABLED 		 =0x10,
-} ISM330DLC_ACC_GYRO_PEDO_t;
-
-#define  	ISM330DLC_ACC_GYRO_PEDO_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_PEDO(void *handle, ISM330DLC_ACC_GYRO_PEDO_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_PEDO(void *handle, ISM330DLC_ACC_GYRO_PEDO_t *value);
 
 /*******************************************************************************
 * Register      : CTRL10_C
@@ -2127,34 +2076,6 @@ mems_status_t ISM330DLC_ACC_GYRO_R_HardIron(void *handle, ISM330DLC_ACC_GYRO_SOF
 /*******************************************************************************
 * Register      : FUNC_SRC
 * Address       : 0X53
-* Bit Group Name: STEP_OVERFLOW
-* Permission    : RO
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_PEDO_STEP_IN_RANGE 		 =0x00,
-  	ISM330DLC_ACC_GYRO_PEDO_ESTEP_OVERFLOW 		 =0x08,
-} ISM330DLC_ACC_GYRO_STEP_OVERFLOW_t;
-
-#define  	ISM330DLC_ACC_GYRO_STEP_OVERFLOW_MASK  	0x08
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_OVERFLOW(void *handle, ISM330DLC_ACC_GYRO_STEP_OVERFLOW_t *value);
-
-/*******************************************************************************
-* Register      : FUNC_SRC
-* Address       : 0X53
-* Bit Group Name: PEDO_EV_STATUS
-* Permission    : RO
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_NOT_DETECTED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_DETECTED 		 =0x10,
-} ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_t;
-
-#define  	ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_MASK  	0x10
-mems_status_t ISM330DLC_ACC_GYRO_R_PEDO_EV_STATUS(void *handle, ISM330DLC_ACC_GYRO_PEDO_EV_STATUS_t *value);
-
-/*******************************************************************************
-* Register      : FUNC_SRC
-* Address       : 0X53
 * Bit Group Name: TILT_EV_STATUS
 * Permission    : RO
 *******************************************************************************/
@@ -2165,34 +2086,6 @@ typedef enum {
 
 #define  	ISM330DLC_ACC_GYRO_TILT_EV_STATUS_MASK  	0x20
 mems_status_t ISM330DLC_ACC_GYRO_R_TILT_EV_STATUS(void *handle, ISM330DLC_ACC_GYRO_TILT_EV_STATUS_t *value);
-
-/*******************************************************************************
-* Register      : FUNC_SRC
-* Address       : 0X53
-* Bit Group Name: SIGN_MOT_EV_STATUS
-* Permission    : RO
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_NOT_DETECTED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_DETECTED 		 =0x40,
-} ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_t;
-
-#define  	ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_MASK  	0x40
-mems_status_t ISM330DLC_ACC_GYRO_R_SIGN_MOT_EV_STATUS(void *handle, ISM330DLC_ACC_GYRO_SIGN_MOT_EV_STATUS_t *value);
-
-/*******************************************************************************
-* Register      : FUNC_SRC
-* Address       : 0X53
-* Bit Group Name: STEP_COUNT_DELTA_IA
-* Permission    : RO
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_NO_STEP_COUNT_IN_DELTA 		 =0x00,
-  	ISM330DLC_ACC_GYRO_STEP_COUNT_IN_DELTA		 =0x80,
-} ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_t;
-
-#define  	ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_MASK  	0x80
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_COUNT_DELTA(void *handle, ISM330DLC_ACC_GYRO_STEP_COUNT_DELTA_t *value);
 
 /*******************************************************************************
 * Register      : TAP_CFG1
@@ -2717,19 +2610,6 @@ mems_status_t ISM330DLC_ACC_GYRO_Get_GetFIFOData(void *handle, u8_t *buff);
 * Permission    : RO
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_Get_GetTimestamp(void *handle, u8_t *buff);
-/*******************************************************************************
-* Register      : <REGISTER_L> - <REGISTER_H>
-* Output Type   : GetStepCounter
-* Permission    : RO
-*******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_Get_GetStepCounter(void *handle, u8_t *buff);
-
-/*******************************************************************************
-* Register      : <REGISTER_L> - <REGISTER_H>
-* Output Type   : Pedometer Threshold
-* Permission    : RO
-*******************************************************************************/
-mems_status_t  ISM330DLC_ACC_GYRO_W_PedoThreshold(void *handle, u8_t newValue);
 
 /************** Use Sensor Hub  *******************/
 
