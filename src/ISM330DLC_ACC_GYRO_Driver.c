@@ -425,6 +425,30 @@ mems_status_t ISM330DLC_ACC_GYRO_R_FS_G(void *handle, ISM330DLC_ACC_GYRO_FS_G_t 
 }
 
 /*******************************************************************************
+* Function Name  : mems_status_t ISM330DLC_ACC_GYRO_GetRawTempData(u16_t *buff)
+* Description    : Read Temperature output register
+* Input          : pointer to [u16_t]
+* Output         : GetRawTempData buffer u16_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_GetRawTempData(void *handle, u16_t *buff)
+{
+  u8_t i, j;
+  u8_t temp[2];
+
+  j=0;
+  for (i=0; i<2; i++)
+  {
+	if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_OUT_TEMP_L+j, &temp[j], 1))
+		  return MEMS_ERROR;
+  }
+
+  *buff = ((temp[1] << 8) & 0xFF00) | temp[0];
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
 * Function Name  : mems_status_t ISM330DLC_ACC_GYRO_GetRawGyroData(u8_t *buff)
 * Description    : Read GetGyroData output register
 * Input          : pointer to [u8_t]
@@ -3271,6 +3295,166 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SOFT(void *handle, ISM330DLC_ACC_GYRO_SOFT_t 
 }
 
 /*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_DEN_XL_G
+* Description    : Write DEN_XL_G
+* Input          : ISM330DLC_ACC_GYRO_DEN_XL_G_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_XL_G(void *handle, ISM330DLC_ACC_GYRO_DEN_XL_G_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_DEN_XL_G_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_DEN_XL_G
+* Description    : Read DEN_XL_G
+* Input          : Pointer to ISM330DLC_ACC_GYRO_DEN_XL_G_t
+* Output         : Status of DEN_XL_G see ISM330DLC_ACC_GYRO_DEN_XL_G_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_XL_G(void *handle, ISM330DLC_ACC_GYRO_DEN_XL_G_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_DEN_XL_G_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_DEN_Z
+* Description    : Write DEN_Z
+* Input          : ISM330DLC_ACC_GYRO_DEN_Z_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_Z(void *handle, ISM330DLC_ACC_GYRO_DEN_Z_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_DEN_Z_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_DEN_Z
+* Description    : Read DEN_Z
+* Input          : Pointer to ISM330DLC_ACC_GYRO_DEN_Z_t
+* Output         : Status of DEN_Z see ISM330DLC_ACC_GYRO_DEN_Z_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_Z(void *handle, ISM330DLC_ACC_GYRO_DEN_Z_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_DEN_Z_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_DEN_Y
+* Description    : Write DEN_Y
+* Input          : ISM330DLC_ACC_GYRO_DEN_Y_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_Y(void *handle, ISM330DLC_ACC_GYRO_DEN_Y_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_DEN_Y_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_DEN_Y
+* Description    : Read DEN_Y
+* Input          : Pointer to ISM330DLC_ACC_GYRO_DEN_Y_t
+* Output         : Status of DEN_Y see ISM330DLC_ACC_GYRO_DEN_Y_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_Y(void *handle, ISM330DLC_ACC_GYRO_DEN_Y_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_DEN_Y_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_DEN_X
+* Description    : Write DEN_X
+* Input          : ISM330DLC_ACC_GYRO_DEN_X_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_X(void *handle, ISM330DLC_ACC_GYRO_DEN_X_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_DEN_X_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_DEN_X
+* Description    : Read DEN_X
+* Input          : Pointer to ISM330DLC_ACC_GYRO_DEN_X_t
+* Output         : Status of DEN_X see ISM330DLC_ACC_GYRO_DEN_X_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_X(void *handle, ISM330DLC_ACC_GYRO_DEN_X_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_CTRL9_XL, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_DEN_X_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_W_TILT
 * Description    : Write XEN_G
 * Input          : ISM330DLC_ACC_GYRO_TILT_G_t
@@ -4010,6 +4194,23 @@ mems_status_t ISM330DLC_ACC_GYRO_R_D6D_EV_STATUS(void *handle, ISM330DLC_ACC_GYR
 }
 
 /*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_DEN_DRDY_STATUS
+* Description    : Read D6D_EV_STATUS
+* Input          : Pointer to ISM330DLC_ACC_GYRO_DEN_DRDY_t
+* Output         : Status of D6D_EV_STATUS see ISM330DLC_ACC_GYRO_DEN_DRDY_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_DRDY_STATUS(void *handle, ISM330DLC_ACC_GYRO_DEN_DRDY_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_D6D_SRC, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_DEN_DRDY_STATUS_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_R_XLDA
 * Description    : Read XLDA
 * Input          : Pointer to ISM330DLC_ACC_GYRO_XLDA_t
@@ -4197,7 +4398,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_FIFOPattern(void *handle, u16_t *value)
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_SENS_HUB_END(void *handle, ISM330DLC_ACC_GYRO_SENS_HUB_END_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC1, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_SENS_HUB_END_MASK; //mask
@@ -4214,7 +4415,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SENS_HUB_END(void *handle, ISM330DLC_ACC_GYRO
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_SOFT_IRON_END(void *handle, ISM330DLC_ACC_GYRO_SOFT_IRON_END_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC1, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_SOFT_IRON_END_MASK; //mask
@@ -4231,7 +4432,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SOFT_IRON_END(void *handle, ISM330DLC_ACC_GYR
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_HardIron(void *handle, ISM330DLC_ACC_GYRO_SOFT_HARD_IRON_STAT_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC1, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_HARD_IRON_STAT_MASK; //mask
@@ -4248,10 +4449,78 @@ mems_status_t ISM330DLC_ACC_GYRO_R_HardIron(void *handle, ISM330DLC_ACC_GYRO_SOF
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_TILT_EV_STATUS(void *handle, ISM330DLC_ACC_GYRO_TILT_EV_STATUS_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC1, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_TILT_EV_STATUS_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_SLAVE0_NACK_STATUS
+* Description    : Read SLAVE0_NACK
+* Input          : Pointer to ISM330DLC_ACC_GYRO_SLAVE0_NACK_STATUS_t
+* Output         : Status of SLAVE0_NACK see ISM330DLC_ACC_GYRO_SLAVE0_NACK_STATUS_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_SLAVE0_NACK_STATUS(void *handle, ISM330DLC_ACC_GYRO_SLAVE0_NACK_STATUS_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC2, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_SLAVE0_NACK_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_SLAVE1_NACK_STATUS
+* Description    : Read SLAVE1_NACK
+* Input          : Pointer to ISM330DLC_ACC_GYRO_SLAVE1_NACK_STATUS_t
+* Output         : Status of SLAVE1_NACK see ISM330DLC_ACC_GYRO_SLAVE1_NACK_STATUS_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_SLAVE1_NACK_STATUS(void *handle, ISM330DLC_ACC_GYRO_SLAVE1_NACK_STATUS_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC2, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_SLAVE1_NACK_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_SLAVE2_NACK_STATUS
+* Description    : Read SLAVE2_NACK
+* Input          : Pointer to ISM330DLC_ACC_GYRO_SLAVE2_NACK_STATUS_t
+* Output         : Status of SLAVE2_NACK see ISM330DLC_ACC_GYRO_SLAVE2_NACK_STATUS_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_SLAVE2_NACK_STATUS(void *handle, ISM330DLC_ACC_GYRO_SLAVE2_NACK_STATUS_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC2, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_SLAVE2_NACK_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_SLAVE3_NACK_STATUS
+* Description    : Read SLAVE3_NACK
+* Input          : Pointer to ISM330DLC_ACC_GYRO_SLAVE3_NACK_STATUS_t
+* Output         : Status of SLAVE3_NACK see ISM330DLC_ACC_GYRO_SLAVE3_NACK_STATUS_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_SLAVE3_NACK_STATUS(void *handle, ISM330DLC_ACC_GYRO_SLAVE3_NACK_STATUS_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_FUNC_SRC2, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_SLAVE3_NACK_MASK; //mask
 
   return MEMS_SUCCESS;
 }
@@ -4267,13 +4536,13 @@ mems_status_t ISM330DLC_ACC_GYRO_W_LIR(void *handle, ISM330DLC_ACC_GYRO_LIR_t ne
 {
   u8_t value;
 
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   value &= ~ISM330DLC_ACC_GYRO_LIR_MASK;
   value |= newValue;
 
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   return MEMS_SUCCESS;
@@ -4288,7 +4557,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_LIR(void *handle, ISM330DLC_ACC_GYRO_LIR_t ne
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_LIR(void *handle, ISM330DLC_ACC_GYRO_LIR_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_LIR_MASK; //mask
@@ -4307,13 +4576,13 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TAP_Z_EN(void *handle, ISM330DLC_ACC_GYRO_TAP
 {
   u8_t value;
 
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   value &= ~ISM330DLC_ACC_GYRO_TAP_Z_EN_MASK;
   value |= newValue;
 
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   return MEMS_SUCCESS;
@@ -4328,7 +4597,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TAP_Z_EN(void *handle, ISM330DLC_ACC_GYRO_TAP
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_Z_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Z_EN_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_TAP_Z_EN_MASK; //mask
@@ -4347,13 +4616,13 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TAP_Y_EN(void *handle, ISM330DLC_ACC_GYRO_TAP
 {
   u8_t value;
 
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   value &= ~ISM330DLC_ACC_GYRO_TAP_Y_EN_MASK;
   value |= newValue;
 
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   return MEMS_SUCCESS;
@@ -4368,7 +4637,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TAP_Y_EN(void *handle, ISM330DLC_ACC_GYRO_TAP
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_Y_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Y_EN_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_TAP_Y_EN_MASK; //mask
@@ -4387,13 +4656,13 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TAP_X_EN(void *handle, ISM330DLC_ACC_GYRO_TAP
 {
   u8_t value;
 
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   value &= ~ISM330DLC_ACC_GYRO_TAP_X_EN_MASK;
   value |= newValue;
 
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   return MEMS_SUCCESS;
@@ -4408,7 +4677,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TAP_X_EN(void *handle, ISM330DLC_ACC_GYRO_TAP
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_X_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_X_EN_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_TAP_X_EN_MASK; //mask
@@ -4427,13 +4696,13 @@ mems_status_t ISM330DLC_ACC_GYRO_W_SLOPE_FDS(void *handle, ISM330DLC_ACC_GYRO_SL
 {
   u8_t value;
 
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   value &= ~ISM330DLC_ACC_GYRO_SLOPE_FDS_MASK;
   value |= newValue;
 
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   return MEMS_SUCCESS;
@@ -4448,10 +4717,50 @@ mems_status_t ISM330DLC_ACC_GYRO_W_SLOPE_FDS(void *handle, ISM330DLC_ACC_GYRO_SL
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_SLOPE_FDS(void *handle, ISM330DLC_ACC_GYRO_SLOPE_FDS_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_SLOPE_FDS_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_INACT_EN
+* Description    : Write INACT_EN
+* Input          : ISM330DLC_ACC_GYRO_INACT_EN_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_INACT_EN(void *handle, ISM330DLC_ACC_GYRO_INACT_EN_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_INACT_ENS_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_INACT_EN
+* Description    : Read INACT_EN
+* Input          : Pointer to ISM330DLC_ACC_GYRO_INACT_EN_t
+* Output         : Status of INACT_EN see ISM330DLC_ACC_GYRO_INACT_EN_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_INACT_EN(void *handle, ISM330DLC_ACC_GYRO_INACT_EN_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_INACT_ENS_MASK; //mask
 
   return MEMS_SUCCESS;
 }
@@ -4467,13 +4776,13 @@ mems_status_t ISM330DLC_ACC_GYRO_W_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_IN
 {
   u8_t value;
 
-  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   value &= ~ISM330DLC_ACC_GYRO_INT_EN_MASK;
   value |= newValue;
 
-  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, &value, 1) )
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, &value, 1) )
     return MEMS_ERROR;
 
   return MEMS_SUCCESS;
@@ -4488,7 +4797,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_IN
 *******************************************************************************/
 mems_status_t ISM330DLC_ACC_GYRO_R_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_INT_EN_t *value)
 {
- if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG1, (u8_t *)value, 1) )
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_TAP_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_INT_EN_MASK; //mask
@@ -5199,19 +5508,19 @@ mems_status_t ISM330DLC_ACC_GYRO_R_6DEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_I
 
 /*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_W_TapEvOnInt1
-* Description    : Write INT1_TAP
-* Input          : ISM330DLC_ACC_GYRO_INT1_TAP_t
+* Description    : Write INT1_DOUBLE_TAP
+* Input          : ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_t
 * Output         : None
 * Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
 *******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TAP_t newValue)
+mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_t newValue)
 {
   u8_t value;
 
   if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD1_CFG, &value, 1) )
     return MEMS_ERROR;
 
-  value &= ~ISM330DLC_ACC_GYRO_INT1_TAP_MASK;
+  value &= ~ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_MASK;
   value |= newValue;
 
   if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_MD1_CFG, &value, 1) )
@@ -5222,17 +5531,17 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_
 
 /*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_R_TapEvOnInt1
-* Description    : Read INT1_TAP
-* Input          : Pointer to ISM330DLC_ACC_GYRO_INT1_TAP_t
-* Output         : Status of INT1_TAP see ISM330DLC_ACC_GYRO_INT1_TAP_t
+* Description    : Read INT1_DOUBLE_TAP
+* Input          : Pointer to ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_t
+* Output         : Status of INT1_DOUBLE_TAP see ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_t
 * Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
 *******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TAP_t *value)
+mems_status_t ISM330DLC_ACC_GYRO_R_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_t *value)
 {
  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD1_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
-  *value &= ISM330DLC_ACC_GYRO_INT1_TAP_MASK; //mask
+  *value &= ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_MASK; //mask
 
   return MEMS_SUCCESS;
 }
@@ -5519,19 +5828,19 @@ mems_status_t ISM330DLC_ACC_GYRO_R_6DEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_I
 
 /*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_W_TapEvOnInt2
-* Description    : Write INT2_TAP
-* Input          : ISM330DLC_ACC_GYRO_INT2_TAP_t
+* Description    : Write INT2_DOUBLE_TAP
+* Input          : ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_t
 * Output         : None
 * Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
 *******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TAP_t newValue)
+mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_t newValue)
 {
   u8_t value;
 
   if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
     return MEMS_ERROR;
 
-  value &= ~ISM330DLC_ACC_GYRO_INT2_TAP_MASK;
+  value &= ~ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_MASK;
   value |= newValue;
 
   if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
@@ -5542,17 +5851,17 @@ mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_
 
 /*******************************************************************************
 * Function Name  : ISM330DLC_ACC_GYRO_R_TapEvOnInt2
-* Description    : Read INT2_TAP
-* Input          : Pointer to ISM330DLC_ACC_GYRO_INT2_TAP_t
-* Output         : Status of INT2_TAP see ISM330DLC_ACC_GYRO_INT2_TAP_t
+* Description    : Read INT2_DOUBLE_TAP
+* Input          : Pointer to ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_t
+* Output         : Status of INT2_DOUBLE_TAP see ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_t
 * Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
 *******************************************************************************/
-mems_status_t ISM330DLC_ACC_GYRO_R_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TAP_t *value)
+mems_status_t ISM330DLC_ACC_GYRO_R_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_t *value)
 {
  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, (u8_t *)value, 1) )
     return MEMS_ERROR;
 
-  *value &= ISM330DLC_ACC_GYRO_INT2_TAP_MASK; //mask
+  *value &= ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_MASK; //mask
 
   return MEMS_SUCCESS;
 }
@@ -5713,6 +6022,86 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SleepEvOnInt2(void *handle, ISM330DLC_ACC_GYR
     return MEMS_ERROR;
 
   *value &= ISM330DLC_ACC_GYRO_INT2_SLEEP_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_MASTER_CMD_CODE
+* Description    : Write MASTER_CMD_CODE
+* Input          : u8_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_MASTER_CMD_CODE(void *handle, u8_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_MASTER_CMD_CODE_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_MASTER_CMD_CODE
+* Description    : Read MASTER_CMD_CODE
+* Input          : Pointer to u8_t
+* Output         : Status of MASTER_CMD_CODE see u8_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_MASTER_CMD_CODE(void *handle, u8_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_MASTER_CMD_CODE_MASK; //mask
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_W_SENS_SYNC_SPI_ERROR_CODE
+* Description    : Write SENS_SYNC_SPI_ERROR_CODE
+* Input          : u8_t
+* Output         : None
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_W_SENS_SYNC_SPI_ERROR_CODE(void *handle, u8_t newValue)
+{
+  u8_t value;
+
+  if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
+    return MEMS_ERROR;
+
+  value &= ~ISM330DLC_ACC_GYRO_SENS_SYNC_SPI_ERROR_CODE_MASK;
+  value |= newValue;
+
+  if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
+    return MEMS_ERROR;
+
+  return MEMS_SUCCESS;
+}
+
+/*******************************************************************************
+* Function Name  : ISM330DLC_ACC_GYRO_R_SENS_SYNC_SPI_ERROR_CODE
+* Description    : Read SENS_SYNC_SPI_ERROR_CODE
+* Input          : Pointer to u8_t
+* Output         : Status of SENS_SYNC_SPI_ERROR_CODE see u8_t
+* Return         : Status [MEMS_ERROR, MEMS_SUCCESS]
+*******************************************************************************/
+mems_status_t ISM330DLC_ACC_GYRO_R_SENS_SYNC_SPI_ERROR_CODE(void *handle, u8_t *value)
+{
+ if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, (u8_t *)value, 1) )
+    return MEMS_ERROR;
+
+  *value &= ISM330DLC_ACC_GYRO_SENS_SYNC_SPI_ERROR_CODE_MASK; //mask
 
   return MEMS_SUCCESS;
 }
