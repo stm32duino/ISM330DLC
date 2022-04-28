@@ -418,7 +418,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Get_G_Sensitivity(float *pfData)
     /* Store the sensitivity based on actual full scale. */
     switch( fullScale )
     {
-      case ISM330DLC_ACC_GYRO_FS_G_245dps:
+      case ISM330DLC_ACC_GYRO_FS_G_250dps:
         *pfData = ( float )ISM330DLC_GYRO_SENSITIVITY_FOR_FS_245DPS;
         break;
       case ISM330DLC_ACC_GYRO_FS_G_500dps:
@@ -504,7 +504,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Get_X_ODR(float* odr)
     case ISM330DLC_ACC_GYRO_ODR_XL_POWER_DOWN:
       *odr = 0.0f;
       break;
-    case ISM330DLC_ACC_GYRO_ODR_XL_13Hz:
+    case ISM330DLC_ACC_GYRO_ODR_XL_12Hz5:
       *odr = 13.0f;
       break;
     case ISM330DLC_ACC_GYRO_ODR_XL_26Hz:
@@ -561,7 +561,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Get_G_ODR(float* odr)
     case ISM330DLC_ACC_GYRO_ODR_G_POWER_DOWN:
       *odr = 0.0f;
       break;
-    case ISM330DLC_ACC_GYRO_ODR_G_13Hz:
+    case ISM330DLC_ACC_GYRO_ODR_G_12Hz5:
       *odr = 13.0f;
       break;
     case ISM330DLC_ACC_GYRO_ODR_G_26Hz:
@@ -633,7 +633,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Set_X_ODR_When_Enabled(float odr)
 {
   ISM330DLC_ACC_GYRO_ODR_XL_t new_odr;
 
-  new_odr = ( odr <=   13.0f ) ? ISM330DLC_ACC_GYRO_ODR_XL_13Hz
+  new_odr = ( odr <=   13.0f ) ? ISM330DLC_ACC_GYRO_ODR_XL_12Hz5
           : ( odr <=   26.0f ) ? ISM330DLC_ACC_GYRO_ODR_XL_26Hz
           : ( odr <=   52.0f ) ? ISM330DLC_ACC_GYRO_ODR_XL_52Hz
           : ( odr <=  104.0f ) ? ISM330DLC_ACC_GYRO_ODR_XL_104Hz
@@ -707,7 +707,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Set_G_ODR_When_Enabled(float odr)
 {
   ISM330DLC_ACC_GYRO_ODR_G_t new_odr;
 
-  new_odr = ( odr <=  13.0f )  ? ISM330DLC_ACC_GYRO_ODR_G_13Hz
+  new_odr = ( odr <=  13.0f )  ? ISM330DLC_ACC_GYRO_ODR_G_12Hz5
           : ( odr <=  26.0f )  ? ISM330DLC_ACC_GYRO_ODR_G_26Hz
           : ( odr <=  52.0f )  ? ISM330DLC_ACC_GYRO_ODR_G_52Hz
           : ( odr <= 104.0f )  ? ISM330DLC_ACC_GYRO_ODR_G_104Hz
@@ -811,7 +811,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Get_G_FS(float* fullScale)
   {
     switch( fs_low_level )
     {
-      case ISM330DLC_ACC_GYRO_FS_G_245dps:
+      case ISM330DLC_ACC_GYRO_FS_G_250dps:
         *fullScale = 245.0f;
         break;
       case ISM330DLC_ACC_GYRO_FS_G_500dps:
@@ -872,7 +872,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Set_G_FS(float fullScale)
   }
   else
   {
-    new_fs = ( fullScale <=  245.0f ) ? ISM330DLC_ACC_GYRO_FS_G_245dps
+    new_fs = ( fullScale <=  245.0f ) ? ISM330DLC_ACC_GYRO_FS_G_250dps
            : ( fullScale <=  500.0f ) ? ISM330DLC_ACC_GYRO_FS_G_500dps
            : ( fullScale <= 1000.0f ) ? ISM330DLC_ACC_GYRO_FS_G_1000dps
            :                            ISM330DLC_ACC_GYRO_FS_G_2000dps;

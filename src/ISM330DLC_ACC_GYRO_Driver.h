@@ -195,6 +195,11 @@ typedef enum {
 #define ISM330DLC_ACC_GYRO_OUT_MAG_RAW_Z_L  	0X6A
 #define ISM330DLC_ACC_GYRO_OUT_MAG_RAW_Z_H  	0X6B
 
+#define ISM330DLC_ACC_GYRO_INT_OIS  	0X6F
+#define ISM330DLC_ACC_GYRO_CTRL1_OIS  	0X70
+#define ISM330DLC_ACC_GYRO_CTRL2_OIS  	0X71
+#define ISM330DLC_ACC_GYRO_CTRL3_OIS  	0X72
+
 #define ISM330DLC_ACC_GYRO_X_OFS_USR  	0X73
 #define ISM330DLC_ACC_GYRO_Y_OFS_USR  	0X74
 #define ISM330DLC_ACC_GYRO_Z_OFS_USR  	0X75
@@ -272,7 +277,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_WHO_AM_I(void *handle, u8_t *value);
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_BDU_CONTINUOS 		 =0x00,
+  	ISM330DLC_ACC_GYRO_BDU_CONTINUOS 			 =0x00,
   	ISM330DLC_ACC_GYRO_BDU_BLOCK_UPDATE 		 =0x40,
 } ISM330DLC_ACC_GYRO_BDU_t;
 
@@ -294,7 +299,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_FS_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_FS_XL_MASK  	0x0C
-mems_status_t  ISM330DLC_ACC_GYRO_W_FS_XL(void *handle, ISM330DLC_ACC_GYRO_FS_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FS_XL(void *handle, ISM330DLC_ACC_GYRO_FS_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FS_XL(void *handle, ISM330DLC_ACC_GYRO_FS_XL_t *value);
 
 /*******************************************************************************
@@ -312,10 +317,11 @@ mems_status_t ISM330DLC_ACC_Get_Acceleration(void *handle, int *buff, u8_t from_
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_ODR_XL_POWER_DOWN 		 =0x00,
-  	ISM330DLC_ACC_GYRO_ODR_XL_13Hz 		 =0x10,
-  	ISM330DLC_ACC_GYRO_ODR_XL_26Hz 		 =0x20,
-  	ISM330DLC_ACC_GYRO_ODR_XL_52Hz 		 =0x30,
+  	ISM330DLC_ACC_GYRO_ODR_XL_POWER_DOWN 	 =0x00,
+  	ISM330DLC_ACC_GYRO_ODR_XL_1Hz6 			 =0xB0,
+  	ISM330DLC_ACC_GYRO_ODR_XL_12Hz5 		 =0x10,
+  	ISM330DLC_ACC_GYRO_ODR_XL_26Hz 			 =0x20,
+  	ISM330DLC_ACC_GYRO_ODR_XL_52Hz 			 =0x30,
   	ISM330DLC_ACC_GYRO_ODR_XL_104Hz 		 =0x40,
   	ISM330DLC_ACC_GYRO_ODR_XL_208Hz 		 =0x50,
   	ISM330DLC_ACC_GYRO_ODR_XL_416Hz 		 =0x60,
@@ -326,7 +332,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_ODR_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_ODR_XL_MASK  	0xF0
-mems_status_t  ISM330DLC_ACC_GYRO_W_ODR_XL(void *handle, ISM330DLC_ACC_GYRO_ODR_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_ODR_XL(void *handle, ISM330DLC_ACC_GYRO_ODR_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_ODR_XL(void *handle, ISM330DLC_ACC_GYRO_ODR_XL_t *value);
 mems_status_t ISM330DLC_ACC_GYRO_translate_ODR_XL(ISM330DLC_ACC_GYRO_ODR_XL_t value, u16_t *odr_hz_val);
 
@@ -337,14 +343,14 @@ mems_status_t ISM330DLC_ACC_GYRO_translate_ODR_XL(ISM330DLC_ACC_GYRO_ODR_XL_t va
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_FS_G_245dps 		 =0x00,
-  	ISM330DLC_ACC_GYRO_FS_G_500dps 		 =0x04,
+  	ISM330DLC_ACC_GYRO_FS_G_250dps 			 =0x00,
+  	ISM330DLC_ACC_GYRO_FS_G_500dps 			 =0x04,
   	ISM330DLC_ACC_GYRO_FS_G_1000dps 		 =0x08,
   	ISM330DLC_ACC_GYRO_FS_G_2000dps 		 =0x0C,
 } ISM330DLC_ACC_GYRO_FS_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_FS_G_MASK  	0x0C
-mems_status_t  ISM330DLC_ACC_GYRO_W_FS_G(void *handle, ISM330DLC_ACC_GYRO_FS_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FS_G(void *handle, ISM330DLC_ACC_GYRO_FS_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FS_G(void *handle, ISM330DLC_ACC_GYRO_FS_G_t *value);
 
 /*******************************************************************************
@@ -354,21 +360,21 @@ mems_status_t ISM330DLC_ACC_GYRO_R_FS_G(void *handle, ISM330DLC_ACC_GYRO_FS_G_t 
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_ODR_G_POWER_DOWN 		 =0x00,
-  	ISM330DLC_ACC_GYRO_ODR_G_13Hz 		 =0x10,
-  	ISM330DLC_ACC_GYRO_ODR_G_26Hz 		 =0x20,
-  	ISM330DLC_ACC_GYRO_ODR_G_52Hz 		 =0x30,
-  	ISM330DLC_ACC_GYRO_ODR_G_104Hz 		 =0x40,
-  	ISM330DLC_ACC_GYRO_ODR_G_208Hz 		 =0x50,
-  	ISM330DLC_ACC_GYRO_ODR_G_416Hz 		 =0x60,
-  	ISM330DLC_ACC_GYRO_ODR_G_833Hz 		 =0x70,
+  	ISM330DLC_ACC_GYRO_ODR_G_POWER_DOWN 	 =0x00,
+  	ISM330DLC_ACC_GYRO_ODR_G_12Hz5 			 =0x10,
+  	ISM330DLC_ACC_GYRO_ODR_G_26Hz 			 =0x20,
+  	ISM330DLC_ACC_GYRO_ODR_G_52Hz 			 =0x30,
+  	ISM330DLC_ACC_GYRO_ODR_G_104Hz 			 =0x40,
+  	ISM330DLC_ACC_GYRO_ODR_G_208Hz 			 =0x50,
+  	ISM330DLC_ACC_GYRO_ODR_G_416Hz 			 =0x60,
+  	ISM330DLC_ACC_GYRO_ODR_G_833Hz 			 =0x70,
   	ISM330DLC_ACC_GYRO_ODR_G_1660Hz 		 =0x80,
   	ISM330DLC_ACC_GYRO_ODR_G_3330Hz 		 =0x90,
   	ISM330DLC_ACC_GYRO_ODR_G_6660Hz 		 =0xA0,
 } ISM330DLC_ACC_GYRO_ODR_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_ODR_G_MASK  	0xF0
-mems_status_t  ISM330DLC_ACC_GYRO_W_ODR_G(void *handle, ISM330DLC_ACC_GYRO_ODR_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_ODR_G(void *handle, ISM330DLC_ACC_GYRO_ODR_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_ODR_G(void *handle, ISM330DLC_ACC_GYRO_ODR_G_t *value);
 mems_status_t ISM330DLC_ACC_GYRO_translate_ODR_G(ISM330DLC_ACC_GYRO_ODR_G_t value, u16_t *odr_hz_val);
 
@@ -383,6 +389,21 @@ mems_status_t ISM330DLC_ACC_Get_AngularRate(void *handle, int *buff, u8_t from_f
 /*******************************************************************************
 * Register      : CTRL1_XL
 * Address       : 0X10
+* Bit Group Name: BW0_XL
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+  	ISM330DLC_ACC_GYRO_BW0_XL_1_5KHZ 		 =0x00,
+  	ISM330DLC_ACC_GYRO_BW0_XL_400HZ 		 =0x01,
+} ISM330DLC_ACC_GYRO_BW0_XL_t;
+
+#define  	ISM330DLC_ACC_GYRO_BW0_XL_MASK  	0x01
+mems_status_t ISM330DLC_ACC_GYRO_W_BW0_XL(void *handle, ISM330DLC_ACC_GYRO_BW0_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_BW0_XL(void *handle, ISM330DLC_ACC_GYRO_BW0_XL_t *value);
+
+/*******************************************************************************
+* Register      : CTRL1_XL
+* Address       : 0X10
 * Bit Group Name: BW_SEL
 * Permission    : RW
 *******************************************************************************/
@@ -392,7 +413,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_BW_SEL_t;
 
 #define  	ISM330DLC_ACC_GYRO_BW_SEL_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_BW_SEL(void *handle, ISM330DLC_ACC_GYRO_BW_SEL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_BW_SEL(void *handle, ISM330DLC_ACC_GYRO_BW_SEL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_BW_SEL(void *handle, ISM330DLC_ACC_GYRO_BW_SEL_t *value);
 
 /*******************************************************************************
@@ -407,7 +428,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_FS_125_t;
 
 #define  	ISM330DLC_ACC_GYRO_FS_125_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_FS_125(void *handle, ISM330DLC_ACC_GYRO_FS_125_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FS_125(void *handle, ISM330DLC_ACC_GYRO_FS_125_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FS_125(void *handle, ISM330DLC_ACC_GYRO_FS_125_t *value);
 
 /**************** Advanced Function  *******************/
@@ -424,7 +445,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_BLE_t;
 
 #define  	ISM330DLC_ACC_GYRO_BLE_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_BLE(void *handle, ISM330DLC_ACC_GYRO_BLE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_BLE(void *handle, ISM330DLC_ACC_GYRO_BLE_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_BLE(void *handle, ISM330DLC_ACC_GYRO_BLE_t *value);
 
 /*******************************************************************************
@@ -434,12 +455,12 @@ mems_status_t ISM330DLC_ACC_GYRO_R_BLE(void *handle, ISM330DLC_ACC_GYRO_BLE_t *v
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_EMBEDDED_ACCESS_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_EMBEDDED_ACCESS_DISABLED 	 =0x00,
   	ISM330DLC_ACC_GYRO_EMBEDDED_ACCESS_ENABLED 		 =0x80,
 } ISM330DLC_ACC_GYRO_EMB_ACC_t;
 
 #define  	ISM330DLC_ACC_GYRO_EMB_ACC_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_EmbeddedAccess(void *handle, ISM330DLC_ACC_GYRO_EMB_ACC_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_EmbeddedAccess(void *handle, ISM330DLC_ACC_GYRO_EMB_ACC_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_EmbeddedAccess(void *handle, ISM330DLC_ACC_GYRO_EMB_ACC_t *value);
 
 /*******************************************************************************
@@ -448,9 +469,9 @@ mems_status_t ISM330DLC_ACC_GYRO_R_EmbeddedAccess(void *handle, ISM330DLC_ACC_GY
 * Bit Group Name: TPH
 * Permission    : RW
 *******************************************************************************/
-#define  	ISM330DLC_ACC_GYRO_TPH_MASK  	0xFF
+#define  	ISM330DLC_ACC_GYRO_TPH_MASK  	0x0F
 #define  	ISM330DLC_ACC_GYRO_TPH_POSITION  	0
-mems_status_t  ISM330DLC_ACC_GYRO_W_Stamping_Time_Frame(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_Stamping_Time_Frame(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_Stamping_Time_Frame(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -467,7 +488,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_SYNC_RES_RATIO_t;
 
 #define  	ISM330DLC_ACC_GYRO_SYNC_RES_RATIO_MASK  	0x03
-mems_status_t  ISM330DLC_ACC_GYRO_W_SYNC_RES_RATIO(void *handle, ISM330DLC_ACC_GYRO_SYNC_RES_RATIO_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SYNC_RES_RATIO(void *handle, ISM330DLC_ACC_GYRO_SYNC_RES_RATIO_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SYNC_RES_RATIO(void *handle, ISM330DLC_ACC_GYRO_SYNC_RES_RATIO_t *value);
 
 
@@ -481,7 +502,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SYNC_RES_RATIO(void *handle, ISM330DLC_ACC_GY
 #define  	ISM330DLC_ACC_GYRO_WTM_FIFO_CTRL1_POSITION  	0
 #define  	ISM330DLC_ACC_GYRO_WTM_FIFO_CTRL2_MASK  	0x07
 #define  	ISM330DLC_ACC_GYRO_WTM_FIFO_CTRL2_POSITION  	0
-mems_status_t  ISM330DLC_ACC_GYRO_W_FIFO_Watermark(void *handle, u16_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FIFO_Watermark(void *handle, u16_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_Watermark(void *handle, u16_t *value);
 
 /*******************************************************************************
@@ -496,39 +517,23 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_FIFO_TEMP_t;
 
 #define  	ISM330DLC_ACC_GYRO_FIFO_TEMP_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_FIFO_TEMP(void *handle, ISM330DLC_ACC_GYRO_FIFO_TEMP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FIFO_TEMP(void *handle, ISM330DLC_ACC_GYRO_FIFO_TEMP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_TEMP(void *handle, ISM330DLC_ACC_GYRO_FIFO_TEMP_t *value);
 
-
 /*******************************************************************************
 * Register      : FIFO_CTRL2
 * Address       : 0X07
-* Bit Group Name: TIM_PEDO_FIFO_DRDY
+* Bit Group Name: FIFO_TIMER_EN
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_DRDY_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_DRDY_ENABLED 		 =0x40,
-} ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_DRDY_t;
+  	ISM330DLC_ACC_GYRO_FIFO_TIMER_EN_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_FIFO_TIMER_EN_ENABLED 		 =0x80,
+} ISM330DLC_ACC_GYRO_FIFO_TIMER_EN_t;
 
-#define  	ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_DRDY_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_TIM_PEDO_FIFO_Write_En(void *handle, ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_DRDY_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_TIM_PEDO_FIFO_Write_En(void *handle, ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_DRDY_t *value);
-
-/*******************************************************************************
-* Register      : FIFO_CTRL2
-* Address       : 0X07
-* Bit Group Name: TIM_PEDO_FIFO_EN
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_EN_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_EN_ENABLED 		 =0x80,
-} ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_EN_t;
-
-#define  	ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_EN_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_TIM_PEDO_FIFO_En(void *handle, ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_EN_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_TIM_PEDO_FIFO_En(void *handle, ISM330DLC_ACC_GYRO_TIM_PEDO_FIFO_EN_t *value);
+#define  	ISM330DLC_ACC_GYRO_FIFO_TIMER_EN_MASK  	0x80
+mems_status_t ISM330DLC_ACC_GYRO_W_FIFO_TIMER_En(void *handle, ISM330DLC_ACC_GYRO_FIFO_TIMER_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_TIMER_En(void *handle, ISM330DLC_ACC_GYRO_FIFO_TIMER_EN_t *value);
 
 /*******************************************************************************
 * Register      : FIFO_CTRL3
@@ -537,19 +542,19 @@ mems_status_t ISM330DLC_ACC_GYRO_R_TIM_PEDO_FIFO_En(void *handle, ISM330DLC_ACC_
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DATA_NOT_IN_FIFO 		 =0x00,
+  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DATA_NOT_IN_FIFO 	 =0x00,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_NO_DECIMATION 		 =0x01,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_2 		 =0x02,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_3 		 =0x03,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_4 		 =0x04,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_8 		 =0x05,
-  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_16 		 =0x06,
-  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_32 		 =0x07,
+  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_16 	 =0x06,
+  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_DECIMATION_BY_32 	 =0x07,
 } ISM330DLC_ACC_GYRO_DEC_FIFO_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_DEC_FIFO_XL_MASK  	0x07
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEC_FIFO_XL(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_XL_t newValue);
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEC_FIFO_XL_val(void *handle, u16_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEC_FIFO_XL(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEC_FIFO_XL_val(void *handle, u16_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DEC_FIFO_XL(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_XL_t *value);
 
 /*******************************************************************************
@@ -570,8 +575,8 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DEC_FIFO_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_DEC_FIFO_G_MASK  	0x38
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEC_FIFO_G(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_G_t newValue);
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEC_FIFO_G_val(void *handle, u16_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEC_FIFO_G(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEC_FIFO_G_val(void *handle, u16_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DEC_FIFO_G(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_G_t *value);
 
 /*******************************************************************************
@@ -582,7 +587,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_DEC_FIFO_G(void *handle, ISM330DLC_ACC_GYRO_D
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_DATA_NOT_IN_FIFO 		 =0x00,
-  	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_NO_DECIMATION 		 =0x01,
+  	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_NO_DECIMATION 			 =0x01,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_DECIMATION_BY_2 		 =0x02,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_DECIMATION_BY_3 		 =0x03,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_DECIMATION_BY_4 		 =0x04,
@@ -592,7 +597,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_t;
 
 #define  	ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_MASK  	0x07
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEC_FIFO_DS3(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEC_FIFO_DS3(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DEC_FIFO_DS3(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_DS3_t *value);
 
 /*******************************************************************************
@@ -603,7 +608,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_DEC_FIFO_DS3(void *handle, ISM330DLC_ACC_GYRO
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_DATA_NOT_IN_FIFO 		 =0x00,
-  	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_NO_DECIMATION 		 =0x08,
+  	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_NO_DECIMATION 			 =0x08,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_DECIMATION_BY_2 		 =0x10,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_DECIMATION_BY_3 		 =0x18,
   	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_DECIMATION_BY_4 		 =0x20,
@@ -613,7 +618,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_t;
 
 #define  	ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_MASK  	0x38
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEC_FIFO_DS4(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEC_FIFO_DS4(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DEC_FIFO_DS4(void *handle, ISM330DLC_ACC_GYRO_DEC_FIFO_DS4_t *value);
 
 /*******************************************************************************
@@ -628,7 +633,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_HI_DATA_ONLY_t;
 
 #define  	ISM330DLC_ACC_GYRO_HI_DATA_ONLY_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_HI_DATA_ONLY(void *handle, ISM330DLC_ACC_GYRO_HI_DATA_ONLY_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_HI_DATA_ONLY(void *handle, ISM330DLC_ACC_GYRO_HI_DATA_ONLY_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_HI_DATA_ONLY(void *handle, ISM330DLC_ACC_GYRO_HI_DATA_ONLY_t *value);
 
 /*******************************************************************************
@@ -638,12 +643,12 @@ mems_status_t ISM330DLC_ACC_GYRO_R_HI_DATA_ONLY(void *handle, ISM330DLC_ACC_GYRO
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_STOP_ON_FTH_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_STOP_ON_FTH_DISABLED 	 =0x00,
   	ISM330DLC_ACC_GYRO_STOP_ON_FTH_ENABLED 		 =0x80,
 } ISM330DLC_ACC_GYRO_STOP_ON_FTH_t;
 
 #define  	ISM330DLC_ACC_GYRO_STOP_ON_FTH_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_STOP_ON_FTH(void *handle, ISM330DLC_ACC_GYRO_STOP_ON_FTH_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_STOP_ON_FTH(void *handle, ISM330DLC_ACC_GYRO_STOP_ON_FTH_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_STOP_ON_FTH(void *handle, ISM330DLC_ACC_GYRO_STOP_ON_FTH_t *value);
 
 /*******************************************************************************
@@ -654,17 +659,17 @@ mems_status_t ISM330DLC_ACC_GYRO_R_STOP_ON_FTH(void *handle, ISM330DLC_ACC_GYRO_
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_FIFO_MODE_BYPASS 		 =0x00,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_FIFO 		 =0x01,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_STREAM 		 =0x02,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_STF 		 =0x03,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_BTS 		 =0x04,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_DYN_STREAM 		 =0x05,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_DYN_STREAM_2 		 =0x06,
-  	ISM330DLC_ACC_GYRO_FIFO_MODE_BTF 		 =0x07,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_FIFO 			 =0x01,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_RESERVED1 		 =0x02,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_STREAM 		 =0x03,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_BTS 			 =0x04,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_RESERVED2 		 =0x05,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_STREAM_OVER 	 =0x06,
+  	ISM330DLC_ACC_GYRO_FIFO_MODE_RESERVED3 		 =0x07,
 } ISM330DLC_ACC_GYRO_FIFO_MODE_t;
 
 #define  	ISM330DLC_ACC_GYRO_FIFO_MODE_MASK  	0x07
-mems_status_t  ISM330DLC_ACC_GYRO_W_FIFO_MODE(void *handle, ISM330DLC_ACC_GYRO_FIFO_MODE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FIFO_MODE(void *handle, ISM330DLC_ACC_GYRO_FIFO_MODE_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_MODE(void *handle, ISM330DLC_ACC_GYRO_FIFO_MODE_t *value);
 
 /*******************************************************************************
@@ -674,21 +679,21 @@ mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_MODE(void *handle, ISM330DLC_ACC_GYRO_FI
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_10Hz 		 =0x08,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_25Hz 		 =0x10,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_50Hz 		 =0x18,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_100Hz 		 =0x20,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_200Hz 		 =0x28,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_400Hz 		 =0x30,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_800Hz 		 =0x38,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_DISABLE 	 =0x00,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_12Hz5 		 =0x08,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_26Hz 		 =0x10,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_52Hz 		 =0x18,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_104Hz 		 =0x20,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_208Hz 		 =0x28,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_416Hz 		 =0x30,
+  	ISM330DLC_ACC_GYRO_ODR_FIFO_833Hz 		 =0x38,
   	ISM330DLC_ACC_GYRO_ODR_FIFO_1600Hz 		 =0x40,
   	ISM330DLC_ACC_GYRO_ODR_FIFO_3300Hz 		 =0x48,
   	ISM330DLC_ACC_GYRO_ODR_FIFO_6600Hz 		 =0x50,
-  	ISM330DLC_ACC_GYRO_ODR_FIFO_13300Hz 		 =0x58,
 } ISM330DLC_ACC_GYRO_ODR_FIFO_t;
 
 #define  	ISM330DLC_ACC_GYRO_ODR_FIFO_MASK  	0x78
-mems_status_t  ISM330DLC_ACC_GYRO_W_ODR_FIFO(void *handle, ISM330DLC_ACC_GYRO_ODR_FIFO_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_ODR_FIFO(void *handle, ISM330DLC_ACC_GYRO_ODR_FIFO_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_ODR_FIFO(void *handle, ISM330DLC_ACC_GYRO_ODR_FIFO_t *value);
 
 /*******************************************************************************
@@ -703,7 +708,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DRDY_PULSE_t;
 
 #define  	ISM330DLC_ACC_GYRO_DRDY_PULSE_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_PULSE(void *handle, ISM330DLC_ACC_GYRO_DRDY_PULSE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_PULSE(void *handle, ISM330DLC_ACC_GYRO_DRDY_PULSE_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_PULSE(void *handle, ISM330DLC_ACC_GYRO_DRDY_PULSE_t *value);
 
 /*******************************************************************************
@@ -718,7 +723,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_DRDY_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_DRDY_XL_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_XL_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_DRDY_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_XL_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_DRDY_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_XL_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_DRDY_XL_t *value);
 
 /*******************************************************************************
@@ -729,11 +734,11 @@ mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_XL_on_INT1(void *handle, ISM330DLC_ACC_G
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_INT1_DRDY_G_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_INT1_DRDY_G_ENABLED 		 =0x02,
+  	ISM330DLC_ACC_GYRO_INT1_DRDY_G_ENABLED 			 =0x02,
 } ISM330DLC_ACC_GYRO_INT1_DRDY_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_DRDY_G_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_G_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_DRDY_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_G_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_DRDY_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_G_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_DRDY_G_t *value);
 
 /*******************************************************************************
@@ -748,7 +753,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_BOOT_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_BOOT_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_BOOT_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_BOOT_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_BOOT_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_BOOT_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_BOOT_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_BOOT_t *value);
 
 /*******************************************************************************
@@ -763,7 +768,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_FTH_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_FTH_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_FIFO_TSHLD_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_FTH_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FIFO_TSHLD_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_FTH_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_TSHLD_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_FTH_t *value);
 
 /*******************************************************************************
@@ -778,7 +783,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_OVR_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_OVR_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_OVERRUN_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_OVR_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_OVERRUN_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_OVR_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_OVERRUN_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_OVR_t *value);
 
 /*******************************************************************************
@@ -793,38 +798,8 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_FULL_FLAG_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_FULL_FLAG_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_FULL_FLAG_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_FULL_FLAG_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FULL_FLAG_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_FULL_FLAG_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FULL_FLAG_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_FULL_FLAG_t *value);
-
-/*******************************************************************************
-* Register      : INT1_CTRL
-* Address       : 0X0D
-* Bit Group Name: INT1_SIGN_MOT
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_INT1_SIGN_MOT_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_INT1_SIGN_MOT_ENABLED 		 =0x40,
-} ISM330DLC_ACC_GYRO_INT1_SIGN_MOT_t;
-
-#define  	ISM330DLC_ACC_GYRO_INT1_SIGN_MOT_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_SIGN_MOT_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_SIGN_MOT_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_SIGN_MOT_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_SIGN_MOT_t *value);
-
-/*******************************************************************************
-* Register      : INT1_CTRL
-* Address       : 0X0D
-* Bit Group Name: INT1_STEP_DETECTOR
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_INT1_PEDO_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_INT1_PEDO_ENABLED 		 =0x80,
-} ISM330DLC_ACC_GYRO_INT1_PEDO_t;
-
-#define  	ISM330DLC_ACC_GYRO_INT1_PEDO_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_STEP_DET_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_PEDO_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_DET_on_INT1(void *handle, ISM330DLC_ACC_GYRO_INT1_PEDO_t *value);
 
 /*******************************************************************************
 * Register      : INT2_CTRL
@@ -838,7 +813,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_DRDY_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_DRDY_XL_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_XL_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_DRDY_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_XL_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_DRDY_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_XL_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_DRDY_XL_t *value);
 
 /*******************************************************************************
@@ -849,11 +824,11 @@ mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_XL_on_INT2(void *handle, ISM330DLC_ACC_G
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_INT2_DRDY_G_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_INT2_DRDY_G_ENABLED 		 =0x02,
+  	ISM330DLC_ACC_GYRO_INT2_DRDY_G_ENABLED 			 =0x02,
 } ISM330DLC_ACC_GYRO_INT2_DRDY_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_DRDY_G_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_G_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_DRDY_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_G_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_DRDY_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_G_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_DRDY_G_t *value);
 
 /*******************************************************************************
@@ -884,7 +859,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_FTH_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_FTH_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_FIFO_TSHLD_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_FTH_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FIFO_TSHLD_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_FTH_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FIFO_TSHLD_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_FTH_t *value);
 
 /*******************************************************************************
@@ -899,7 +874,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_OVR_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_OVR_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_OVERRUN_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_OVR_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_OVERRUN_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_OVR_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_OVERRUN_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_OVR_t *value);
 
 /*******************************************************************************
@@ -914,38 +889,8 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_FULL_FLAG_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_FULL_FLAG_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_FULL_FLAG_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_FULL_FLAG_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FULL_FLAG_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_FULL_FLAG_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FULL_FLAG_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_FULL_FLAG_t *value);
-
-/*******************************************************************************
-* Register      : INT2_CTRL
-* Address       : 0X0E
-* Bit Group Name: INT2_STEP_COUNT_OV
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_INT2_STEP_COUNT_OV_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_INT2_STEP_COUNT_OV_ENABLED 		 =0x40,
-} ISM330DLC_ACC_GYRO_INT2_STEP_COUNT_OV_t;
-
-#define  	ISM330DLC_ACC_GYRO_INT2_STEP_COUNT_OV_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_STEP_COUNT_OV_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_STEP_COUNT_OV_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_COUNT_OV_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_STEP_COUNT_OV_t *value);
-
-/*******************************************************************************
-* Register      : INT2_CTRL
-* Address       : 0X0E
-* Bit Group Name: INT2_STEP_DELTA
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_INT2_STEP_DELTA_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_INT2_STEP_DELTA_ENABLED 		 =0x80,
-} ISM330DLC_ACC_GYRO_INT2_STEP_DELTA_t;
-
-#define  	ISM330DLC_ACC_GYRO_INT2_STEP_DELTA_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_STEP_DELTA_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_STEP_DELTA_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_STEP_DELTA_on_INT2(void *handle, ISM330DLC_ACC_GYRO_INT2_STEP_DELTA_t *value);
 
 /*******************************************************************************
 * Register      : CTRL3_C
@@ -959,7 +904,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_SW_RESET_t;
 
 #define  	ISM330DLC_ACC_GYRO_SW_RESET_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_SW_RESET(void *handle, ISM330DLC_ACC_GYRO_SW_RESET_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SW_RESET(void *handle, ISM330DLC_ACC_GYRO_SW_RESET_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SW_RESET(void *handle, ISM330DLC_ACC_GYRO_SW_RESET_t *value);
 
 
@@ -975,7 +920,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_IF_INC_t;
 
 #define  	ISM330DLC_ACC_GYRO_IF_INC_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_IF_Addr_Incr(void *handle, ISM330DLC_ACC_GYRO_IF_INC_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_IF_Addr_Incr(void *handle, ISM330DLC_ACC_GYRO_IF_INC_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_IF_Addr_Incr(void *handle, ISM330DLC_ACC_GYRO_IF_INC_t *value);
 
 /*******************************************************************************
@@ -990,7 +935,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_SIM_t;
 
 #define  	ISM330DLC_ACC_GYRO_SIM_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_SPI_Mode(void *handle, ISM330DLC_ACC_GYRO_SIM_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SPI_Mode(void *handle, ISM330DLC_ACC_GYRO_SIM_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SPI_Mode(void *handle, ISM330DLC_ACC_GYRO_SIM_t *value);
 
 /*******************************************************************************
@@ -1001,11 +946,11 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SPI_Mode(void *handle, ISM330DLC_ACC_GYRO_SIM
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_PP_OD_PUSH_PULL 		 =0x00,
-  	ISM330DLC_ACC_GYRO_PP_OD_OPEN_DRAIN 		 =0x10,
+  	ISM330DLC_ACC_GYRO_PP_OD_OPEN_DRAIN 	 =0x10,
 } ISM330DLC_ACC_GYRO_PP_OD_t;
 
 #define  	ISM330DLC_ACC_GYRO_PP_OD_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_PadSel(void *handle, ISM330DLC_ACC_GYRO_PP_OD_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_PadSel(void *handle, ISM330DLC_ACC_GYRO_PP_OD_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_PadSel(void *handle, ISM330DLC_ACC_GYRO_PP_OD_t *value);
 
 /*******************************************************************************
@@ -1020,7 +965,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT_ACT_LEVEL_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT_ACT_LEVEL_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_INT_ACT_LEVEL(void *handle, ISM330DLC_ACC_GYRO_INT_ACT_LEVEL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_INT_ACT_LEVEL(void *handle, ISM330DLC_ACC_GYRO_INT_ACT_LEVEL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_INT_ACT_LEVEL(void *handle, ISM330DLC_ACC_GYRO_INT_ACT_LEVEL_t *value);
 
 
@@ -1036,7 +981,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_BOOT_t;
 
 #define  	ISM330DLC_ACC_GYRO_BOOT_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_BOOT(void *handle, ISM330DLC_ACC_GYRO_BOOT_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_BOOT(void *handle, ISM330DLC_ACC_GYRO_BOOT_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_BOOT(void *handle, ISM330DLC_ACC_GYRO_BOOT_t *value);
 
 /*******************************************************************************
@@ -1066,7 +1011,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_I2C_DISABLE_t;
 
 #define  	ISM330DLC_ACC_GYRO_I2C_DISABLE_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_I2C_DISABLE(void *handle, ISM330DLC_ACC_GYRO_I2C_DISABLE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_I2C_DISABLE(void *handle, ISM330DLC_ACC_GYRO_I2C_DISABLE_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_I2C_DISABLE(void *handle, ISM330DLC_ACC_GYRO_I2C_DISABLE_t *value);
 
 /*******************************************************************************
@@ -1081,8 +1026,23 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DRDY_MSK_t;
 
 #define  	ISM330DLC_ACC_GYRO_DRDY_MSK_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_MSK(void *handle, ISM330DLC_ACC_GYRO_DRDY_MSK_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_MSK(void *handle, ISM330DLC_ACC_GYRO_DRDY_MSK_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_MSK(void *handle, ISM330DLC_ACC_GYRO_DRDY_MSK_t *value);
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: DEN_DRDY_INT1
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+  	ISM330DLC_ACC_GYRO_DEN_DRDY_INT1_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_DEN_DRDY_INT1_ENABLED 		 =0x10,
+} ISM330DLC_ACC_GYRO_DEN_DRDY_INT1_t;
+
+#define  	ISM330DLC_ACC_GYRO_DEN_DRDY_INT1_MASK  	0x10
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_DRDY_INT1(void *handle, ISM330DLC_ACC_GYRO_DEN_DRDY_INT1_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_DRDY_INT1(void *handle, ISM330DLC_ACC_GYRO_DEN_DRDY_INT1_t *value);
 
 /*******************************************************************************
 * Register      : CTRL4_C
@@ -1096,7 +1056,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_ON_INT1_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_ON_INT1_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_INT2_ON_INT1(void *handle, ISM330DLC_ACC_GYRO_INT2_ON_INT1_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_INT2_ON_INT1(void *handle, ISM330DLC_ACC_GYRO_INT2_ON_INT1_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_INT2_ON_INT1(void *handle, ISM330DLC_ACC_GYRO_INT2_ON_INT1_t *value);
 
 /*******************************************************************************
@@ -1107,12 +1067,27 @@ mems_status_t ISM330DLC_ACC_GYRO_R_INT2_ON_INT1(void *handle, ISM330DLC_ACC_GYRO
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_SLEEP_G_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_SLEEP_G_ENABLED 		 =0x40,
+  	ISM330DLC_ACC_GYRO_SLEEP_G_ENABLED 			 =0x40,
 } ISM330DLC_ACC_GYRO_SLEEP_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_SLEEP_G_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_SleepMode_G(void *handle, ISM330DLC_ACC_GYRO_SLEEP_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SleepMode_G(void *handle, ISM330DLC_ACC_GYRO_SLEEP_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SleepMode_G(void *handle, ISM330DLC_ACC_GYRO_SLEEP_G_t *value);
+
+/*******************************************************************************
+* Register      : CTRL4_C
+* Address       : 0X13
+* Bit Group Name: DEN_XL_EN
+* Permission    : RW
+*******************************************************************************/
+typedef enum {
+  	ISM330DLC_ACC_GYRO_DEN_XL_EN_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_DEN_XL_EN_ENABLED 		 =0x80,
+} ISM330DLC_ACC_GYRO_DEN_XL_EN_t;
+
+#define  	ISM330DLC_ACC_GYRO_DEN_XL_EN_MASK  	0x80
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_XL_EN(void *handle, ISM330DLC_ACC_GYRO_DEN_XL_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_DEN_XL_EN(void *handle, ISM330DLC_ACC_GYRO_DEN_XL_EN_t *value);
 
 /*******************************************************************************
 * Register      : CTRL5_C
@@ -1124,11 +1099,11 @@ typedef enum {
   	ISM330DLC_ACC_GYRO_ST_XL_NORMAL_MODE 		 =0x00,
   	ISM330DLC_ACC_GYRO_ST_XL_POS_SIGN_TEST 		 =0x01,
   	ISM330DLC_ACC_GYRO_ST_XL_NEG_SIGN_TEST 		 =0x02,
-  	ISM330DLC_ACC_GYRO_ST_XL_NA 		 =0x03,
+  	ISM330DLC_ACC_GYRO_ST_XL_NA 				 =0x03,
 } ISM330DLC_ACC_GYRO_ST_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_ST_XL_MASK  	0x03
-mems_status_t  ISM330DLC_ACC_GYRO_W_SelfTest_XL(void *handle, ISM330DLC_ACC_GYRO_ST_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SelfTest_XL(void *handle, ISM330DLC_ACC_GYRO_ST_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SelfTest_XL(void *handle, ISM330DLC_ACC_GYRO_ST_XL_t *value);
 
 /*******************************************************************************
@@ -1140,12 +1115,12 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SelfTest_XL(void *handle, ISM330DLC_ACC_GYRO_
 typedef enum {
   	ISM330DLC_ACC_GYRO_ST_G_NORMAL_MODE 		 =0x00,
   	ISM330DLC_ACC_GYRO_ST_G_POS_SIGN_TEST 		 =0x04,
-  	ISM330DLC_ACC_GYRO_ST_G_NA 		 =0x08,
+  	ISM330DLC_ACC_GYRO_ST_G_NA 					 =0x08,
   	ISM330DLC_ACC_GYRO_ST_G_NEG_SIGN_TEST 		 =0x0C,
 } ISM330DLC_ACC_GYRO_ST_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_ST_G_MASK  	0x0C
-mems_status_t  ISM330DLC_ACC_GYRO_W_SelfTest_G(void *handle, ISM330DLC_ACC_GYRO_ST_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SelfTest_G(void *handle, ISM330DLC_ACC_GYRO_ST_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SelfTest_G(void *handle, ISM330DLC_ACC_GYRO_ST_G_t *value);
 
 /*******************************************************************************
@@ -1155,12 +1130,12 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SelfTest_G(void *handle, ISM330DLC_ACC_GYRO_S
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_DEN_LOW 		 =0x00,
+  	ISM330DLC_ACC_GYRO_DEN_LOW 			 =0x00,
   	ISM330DLC_ACC_GYRO_DEN_HIGH 		 =0x10,
 } ISM330DLC_ACC_GYRO_DEN_LH_t;
 
 #define  	ISM330DLC_ACC_GYRO_DEN_LH_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEN_Polarity(void *handle, ISM330DLC_ACC_GYRO_DEN_LH_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DEN_Polarity(void *handle, ISM330DLC_ACC_GYRO_DEN_LH_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DEN_Polarity(void *handle, ISM330DLC_ACC_GYRO_DEN_LH_t *value);
 
 /*******************************************************************************
@@ -1170,18 +1145,18 @@ mems_status_t ISM330DLC_ACC_GYRO_R_DEN_Polarity(void *handle, ISM330DLC_ACC_GYRO
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_NO_ROUNDING 		 =0x00,
-  	ISM330DLC_ACC_GYRO_ACC_ONLY 		 =0x20,
-  	ISM330DLC_ACC_GYRO_GYRO_ONLY 		 =0x40,
-	ISM330DLC_ACC_GYRO_ACC_GYRO 		 =0x60,
-  	ISM330DLC_ACC_GYRO_SH1_SH6 		 =0x80,
-	ISM330DLC_ACC_GYRO_ACC_SH1_SH6 		 =0xA0,
-	ISM330DLC_ACC_GYRO_ACC_GYRO_SH1_SH6_SH7_SH12 		 =0xC0,
-	ISM330DLC_ACC_GYRO_ACC_GYRO_SH1_SH6	 =0xE0,
+  	ISM330DLC_ACC_GYRO_NO_ROUNDING 					 =0x00,
+  	ISM330DLC_ACC_GYRO_ACC_ONLY 					 =0x20,
+  	ISM330DLC_ACC_GYRO_GYRO_ONLY 					 =0x40,
+	ISM330DLC_ACC_GYRO_ACC_GYRO 					 =0x60,
+  	ISM330DLC_ACC_GYRO_SH1_SH6 						 =0x80,
+	ISM330DLC_ACC_GYRO_ACC_SH1_SH6 					 =0xA0,
+	ISM330DLC_ACC_GYRO_ACC_GYRO_SH1_SH6_SH7_SH12 	 =0xC0,
+	ISM330DLC_ACC_GYRO_ACC_GYRO_SH1_SH6				 =0xE0,
 } ISM330DLC_ACC_GYRO_ROUNDING_t;
 
 #define  	ISM330DLC_ACC_GYRO_ISM330DLC_ACC_GYRO_ROUNDING_t_MASK  	0xE0
-mems_status_t  ISM330DLC_ACC_GYRO_W_CircularBurstMode(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_CircularBurstMode(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_CircularBurstMode(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_t *value);
 
 /*******************************************************************************
@@ -1191,14 +1166,14 @@ mems_status_t ISM330DLC_ACC_GYRO_R_CircularBurstMode(void *handle, ISM330DLC_ACC
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_LP_G_NORMAL 		 =0x00,
-  	ISM330DLC_ACC_GYRO_LP_G_NARROW 		 =0x01,
-  	ISM330DLC_ACC_GYRO_LP_G_VERY_NARROW 		 =0x02,
-  	ISM330DLC_ACC_GYRO_LP_G_WIDE 		 =0x03,
+  	ISM330DLC_ACC_GYRO_LP_G_NORMAL 			 =0x00,
+  	ISM330DLC_ACC_GYRO_LP_G_NARROW 			 =0x01,
+  	ISM330DLC_ACC_GYRO_LP_G_VERY_NARROW 	 =0x02,
+  	ISM330DLC_ACC_GYRO_LP_G_WIDE 			 =0x03,
 } ISM330DLC_ACC_GYRO_FTYPE_t;
 
 #define  	ISM330DLC_ACC_GYRO_FTYPE_MASK  	0x03
-mems_status_t  ISM330DLC_ACC_GYRO_W_LP_BW_G(void *handle, ISM330DLC_ACC_GYRO_FTYPE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_LP_BW_G(void *handle, ISM330DLC_ACC_GYRO_FTYPE_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_LP_BW_G(void *handle, ISM330DLC_ACC_GYRO_FTYPE_t *value);
 
 /*******************************************************************************
@@ -1213,69 +1188,41 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_USR_OFF_W_t;
 
 #define  	ISM330DLC_ACC_GYRO_USR_OFF_W_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_UserOffsetWeight(void *handle, ISM330DLC_ACC_GYRO_USR_OFF_W_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_UserOffsetWeight(void *handle, ISM330DLC_ACC_GYRO_USR_OFF_W_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_UserOffsetWeight(void *handle, ISM330DLC_ACC_GYRO_USR_OFF_W_t *value);
 
 
 /*******************************************************************************
 * Register      : CTRL6_G
 * Address       : 0X15
-* Bit Group Name: LP_XL
+* Bit Group Name: XL_HM_MODE
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_LP_XL_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_LP_XL_ENABLED 		 =0x10,
-} ISM330DLC_ACC_GYRO_LP_XL_t;
+  	ISM330DLC_ACC_GYRO_XL_HM_MODE_ENABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_XL_HM_MODE_DISABLED 		 =0x10,
+} ISM330DLC_ACC_GYRO_XL_HM_MODE_t;
 
-#define  	ISM330DLC_ACC_GYRO_LP_XL_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_LowPower_XL(void *handle, ISM330DLC_ACC_GYRO_LP_XL_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_LowPower_XL(void *handle, ISM330DLC_ACC_GYRO_LP_XL_t *value);
+#define  	ISM330DLC_ACC_GYRO_XL_HM_MODE_MASK  	0x10
+mems_status_t ISM330DLC_ACC_GYRO_W_HighPerform(void *handle, ISM330DLC_ACC_GYRO_XL_HM_MODE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_HighPerform(void *handle, ISM330DLC_ACC_GYRO_XL_HM_MODE_t *value);
 
 /*******************************************************************************
 * Register      : CTRL6_G
 * Address       : 0X15
-* Bit Group Name: DEN_LVL2_EN
+* Bit Group Name: TRIGER_MODE
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_DEN_LVL2_EN_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_DEN_LVL2_EN_ENABLED 		 =0x20,
-} ISM330DLC_ACC_GYRO_DEN_LVL2_EN_t;
+  	ISM330DLC_ACC_GYRO_EDGE_SENSITIVE_TRIGER_MODE 		 =0x80,
+  	ISM330DLC_ACC_GYRO_LEVEL_SENSITIVE_TRIGER_MODE 		 =0x40,
+  	ISM330DLC_ACC_GYRO_LEVEL_SENSITIVE_LATCHED_MODE 	 =0x60,
+  	ISM330DLC_ACC_GYRO_LEVEL_SENSITIVE_FIFO_MODE 		 =0xC0,
+} ISM330DLC_ACC_GYRO_TRIGER_MODE_t;
 
-#define  	ISM330DLC_ACC_GYRO_DEN_LVL2_EN_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEN_LVL2_EN(void *handle, ISM330DLC_ACC_GYRO_DEN_LVL2_EN_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_DEN_LVL2_EN(void *handle, ISM330DLC_ACC_GYRO_DEN_LVL2_EN_t *value);
-
-/*******************************************************************************
-* Register      : CTRL6_G
-* Address       : 0X15
-* Bit Group Name: DEN_LVL_EN
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_DEN_LVL_EN_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_DEN_LVL_EN_ENABLED 		 =0x40,
-} ISM330DLC_ACC_GYRO_DEN_LVL_EN_t;
-
-#define  	ISM330DLC_ACC_GYRO_DEN_LVL_EN_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_DEN_LVL_EN(void *handle, ISM330DLC_ACC_GYRO_DEN_LVL_EN_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_DEN_LVL_EN(void *handle, ISM330DLC_ACC_GYRO_DEN_LVL_EN_t *value);
-
-/*******************************************************************************
-* Register      : CTRL6_G
-* Address       : 0X15
-* Bit Group Name: TRIG_EN
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_DEN_EDGE_EN_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_DEN_EDGE_EN_ENABLED 		 =0x80,
-} ISM330DLC_ACC_GYRO_DEN_EDGE_EN_t;
-
-#define  	ISM330DLC_ACC_GYRO_DEN_EDGE_EN_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_ExternalTrigger(void *handle, ISM330DLC_ACC_GYRO_DEN_EDGE_EN_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_ExternalTrigger(void *handle, ISM330DLC_ACC_GYRO_DEN_EDGE_EN_t *value);
+#define  	ISM330DLC_ACC_GYRO_TRIGER_MODE_MASK  	0xE0
+mems_status_t ISM330DLC_ACC_GYRO_W_TrigerMode(void *handle, ISM330DLC_ACC_GYRO_TRIGER_MODE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_TrigerMode(void *handle, ISM330DLC_ACC_GYRO_TRIGER_MODE_t *value);
 
 /*******************************************************************************
 * Register      : CTRL7_G
@@ -1284,13 +1231,13 @@ mems_status_t ISM330DLC_ACC_GYRO_R_ExternalTrigger(void *handle, ISM330DLC_ACC_G
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_RND_DISABLE 		 =0x00,
-  	ISM330DLC_ACC_GYRO_RND_ENABLE  		 =0x04,
-} ISM330DLC_ACC_GYRO_RND_STATUS_t;
+  	ISM330DLC_ACC_GYRO_ROUNDING_STATUS_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_ROUNDING_STATUS_ENABLED 			 =0x04,
+} ISM330DLC_ACC_GYRO_ROUNDING_STATUS_t;
 
-#define  	ISM330DLC_ACC_GYRO_RND_STATUS_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_RoundingOnStatusRegisters(void *handle, ISM330DLC_ACC_GYRO_RND_STATUS_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_RoundingOnStatusRegisters(void *handle, ISM330DLC_ACC_GYRO_RND_STATUS_t *value);
+#define  	ISM330DLC_ACC_GYRO_ROUNDING_STATUS_MASK  	0x04
+mems_status_t ISM330DLC_ACC_GYRO_W_ROUNDING_STATUS(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_STATUS_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_ROUNDING_STATUS(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_STATUS_t *value);
 
 
 /*******************************************************************************
@@ -1302,12 +1249,12 @@ mems_status_t ISM330DLC_ACC_GYRO_R_RoundingOnStatusRegisters(void *handle, ISM33
 typedef enum {
   	ISM330DLC_ACC_GYRO_HPM_G_0Hz016 		 =0x00,
   	ISM330DLC_ACC_GYRO_HPM_G_0Hz065  		 =0x10,
-  	ISM330DLC_ACC_GYRO_HPM_G_2Hz260 		 =0x20,
-  	ISM330DLC_ACC_GYRO_HPM_G_1Hz04 		 =0x30,
+  	ISM330DLC_ACC_GYRO_HPM_G_0Hz260 		 =0x20,
+  	ISM330DLC_ACC_GYRO_HPM_G_1Hz04 			 =0x30,
 } ISM330DLC_ACC_GYRO_HPM_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_HPM_G_MASK  	0x30
-mems_status_t  ISM330DLC_ACC_GYRO_W_HPM_G(void *handle, ISM330DLC_ACC_GYRO_HPM_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_HPM_G(void *handle, ISM330DLC_ACC_GYRO_HPM_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_HPM_G(void *handle, ISM330DLC_ACC_GYRO_HPM_G_t *value);
 
 /*******************************************************************************
@@ -1322,53 +1269,23 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_HP_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_HP_EN_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_HPFilter_En(void *handle, ISM330DLC_ACC_GYRO_HP_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_HPFilter_En(void *handle, ISM330DLC_ACC_GYRO_HP_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_HPFilter_En(void *handle, ISM330DLC_ACC_GYRO_HP_EN_t *value);
 
 /*******************************************************************************
 * Register      : CTRL7_G
 * Address       : 0X16
-* Bit Group Name: LP_EN
+* Bit Group Name: G_HM_MODE
 * Permission    : RW
 *******************************************************************************/
 typedef enum {
-  	ISM330DLC_ACC_GYRO_LP_EN_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_LP_EN_ENABLED 		 =0x80,
-} ISM330DLC_ACC_GYRO_LP_EN_t;
+  	ISM330DLC_ACC_GYRO_G_HM_MODE_DISABLED 		 =0x00,
+  	ISM330DLC_ACC_GYRO_G_HM_MODE_ENABLED 		 =0x80,
+} ISM330DLC_ACC_GYRO_G_HM_MODE_t;
 
-#define  	ISM330DLC_ACC_GYRO_LP_EN_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_LP_Mode(void *handle, ISM330DLC_ACC_GYRO_LP_EN_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_LP_Mode(void *handle, ISM330DLC_ACC_GYRO_LP_EN_t *value);
-
-/*******************************************************************************
-* Register      : CTRL7_G
-* Address       : 0X16
-* Bit Group Name: ROUNDING_STATUS
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_ROUNDING_STATUS_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_ROUNDING_STATUS_ENABLED 		 =0x04,
-} ISM330DLC_ACC_GYRO_ROUNDING_STATUS_t;
-
-#define  	ISM330DLC_ACC_GYRO_ROUNDING_STATUS_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_ROUNDING_STATUS(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_STATUS_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_ROUNDING_STATUS(void *handle, ISM330DLC_ACC_GYRO_ROUNDING_STATUS_t *value);
-
-/*******************************************************************************
-* Register      : CTRL7_G
-* Address       : 0X16
-* Bit Group Name: HP_G_RST
-* Permission    : RW
-*******************************************************************************/
-typedef enum {
-  	ISM330DLC_ACC_GYRO_HP_G_RST_OFF 		 =0x00,
-  	ISM330DLC_ACC_GYRO_HP_G_RST_ON 		 =0x08,
-} ISM330DLC_ACC_GYRO_HP_G_RST_t;
-
-#define  	ISM330DLC_ACC_GYRO_HP_G_RST_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_HP_G_RST(void *handle, ISM330DLC_ACC_GYRO_HP_G_RST_t newValue);
-mems_status_t ISM330DLC_ACC_GYRO_R_HP_G_RST(void *handle, ISM330DLC_ACC_GYRO_HP_G_RST_t *value);
+#define  	ISM330DLC_ACC_GYRO_G_HM_MODE_MASK  	0x80
+mems_status_t ISM330DLC_ACC_GYRO_W_HM_Mode(void *handle, ISM330DLC_ACC_GYRO_G_HM_MODE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_R_HM_Mode(void *handle, ISM330DLC_ACC_GYRO_G_HM_MODE_t *value);
 
 /*******************************************************************************
 * Register      : CTRL8_XL
@@ -1382,7 +1299,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_LOW_PASS_ON_6D_t;
 
 #define  	ISM330DLC_ACC_GYRO_LOW_PASS_ON_6D_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_LOW_PASS_ON_6D(void *handle, ISM330DLC_ACC_GYRO_LOW_PASS_ON_6D_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_LOW_PASS_ON_6D(void *handle, ISM330DLC_ACC_GYRO_LOW_PASS_ON_6D_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_LOW_PASS_ON_6D(void *handle, ISM330DLC_ACC_GYRO_LOW_PASS_ON_6D_t *value);
 
 /*******************************************************************************
@@ -1397,7 +1314,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_HP_SLOPE_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_HP_SLOPE_XL_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_HP_SLOPE_XL(void *handle, ISM330DLC_ACC_GYRO_HP_SLOPE_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_HP_SLOPE_XL(void *handle, ISM330DLC_ACC_GYRO_HP_SLOPE_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_HP_SLOPE_XL(void *handle, ISM330DLC_ACC_GYRO_HP_SLOPE_XL_t *value);
 
 /*******************************************************************************
@@ -1412,7 +1329,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_IN_COMP_t;
 
 #define  	ISM330DLC_ACC_GYRO_IN_COMP_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_InComposit(void *handle, ISM330DLC_ACC_GYRO_IN_COMP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_InComposit(void *handle, ISM330DLC_ACC_GYRO_IN_COMP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_InComposit(void *handle, ISM330DLC_ACC_GYRO_IN_COMP_t *value);
 
 /*******************************************************************************
@@ -1444,7 +1361,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_HPCF_XL_t;
 
 #define  	ISM330DLC_ACC_GYRO_HPCF_XL_MASK  	0x60
-mems_status_t  ISM330DLC_ACC_GYRO_W_HPCF_XL(void *handle, ISM330DLC_ACC_GYRO_HPCF_XL_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_HPCF_XL(void *handle, ISM330DLC_ACC_GYRO_HPCF_XL_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_HPCF_XL(void *handle, ISM330DLC_ACC_GYRO_HPCF_XL_t *value);
 
 /*******************************************************************************
@@ -1471,11 +1388,11 @@ mems_status_t ISM330DLC_ACC_GYRO_R_LowPassFiltSel_XL(void *handle, ISM330DLC_ACC
 *******************************************************************************/
 typedef enum {
   	ISM330DLC_ACC_GYRO_SOFT_DISABLED 		 =0x00,
-  	ISM330DLC_ACC_GYRO_SOFT_ENABLE 		 =0x04,
+  	ISM330DLC_ACC_GYRO_SOFT_ENABLE 			 =0x04,
 } ISM330DLC_ACC_GYRO_SOFT_t;
 
 #define  	ISM330DLC_ACC_GYRO_SOFT_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_SOFT(void *handle, ISM330DLC_ACC_GYRO_SOFT_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SOFT(void *handle, ISM330DLC_ACC_GYRO_SOFT_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SOFT(void *handle, ISM330DLC_ACC_GYRO_SOFT_t *value);
 
 /*******************************************************************************
@@ -1490,7 +1407,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_FUNC_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_FUNC_EN_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_FUNC_EN(void *handle, ISM330DLC_ACC_GYRO_FUNC_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FUNC_EN(void *handle, ISM330DLC_ACC_GYRO_FUNC_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FUNC_EN(void *handle, ISM330DLC_ACC_GYRO_FUNC_EN_t *value);
 
 /*******************************************************************************
@@ -1505,7 +1422,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_TILT_G_t;
 
 #define  	ISM330DLC_ACC_GYRO_TILT_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_TILT(void *handle, ISM330DLC_ACC_GYRO_TILT_G_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TILT(void *handle, ISM330DLC_ACC_GYRO_TILT_G_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TILT(void *handle, ISM330DLC_ACC_GYRO_TILT_G_t *value);
 
 /*******************************************************************************
@@ -1520,7 +1437,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_TIMER_t;
 
 #define  	ISM330DLC_ACC_GYRO_TIMER_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_TIMER(void *handle, ISM330DLC_ACC_GYRO_TIMER_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TIMER(void *handle, ISM330DLC_ACC_GYRO_TIMER_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TIMER(void *handle, ISM330DLC_ACC_GYRO_TIMER_t *value);
 
 
@@ -1536,7 +1453,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_MASTER_ON_t;
 
 #define  	ISM330DLC_ACC_GYRO_MASTER_ON_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_I2C_MASTER_Enable(void *handle, ISM330DLC_ACC_GYRO_MASTER_ON_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_I2C_MASTER_Enable(void *handle, ISM330DLC_ACC_GYRO_MASTER_ON_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_I2C_MASTER_Enable(void *handle, ISM330DLC_ACC_GYRO_MASTER_ON_t *value);
 
 /*******************************************************************************
@@ -1551,7 +1468,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_IRON_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_IRON_EN_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_IronCorrection_EN(void *handle, ISM330DLC_ACC_GYRO_IRON_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_IronCorrection_EN(void *handle, ISM330DLC_ACC_GYRO_IRON_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_IronCorrection_EN(void *handle, ISM330DLC_ACC_GYRO_IRON_EN_t *value);
 
 /*******************************************************************************
@@ -1566,7 +1483,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_PASS_THRU_MODE_t;
 
 #define  	ISM330DLC_ACC_GYRO_PASS_THRU_MODE_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_PASS_THRU_MODE(void *handle, ISM330DLC_ACC_GYRO_PASS_THRU_MODE_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_PASS_THRU_MODE(void *handle, ISM330DLC_ACC_GYRO_PASS_THRU_MODE_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_PASS_THRU_MODE(void *handle, ISM330DLC_ACC_GYRO_PASS_THRU_MODE_t *value);
 
 /*******************************************************************************
@@ -1581,7 +1498,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_PULL_UP_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_PULL_UP_EN_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_PULL_UP_EN(void *handle, ISM330DLC_ACC_GYRO_PULL_UP_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_PULL_UP_EN(void *handle, ISM330DLC_ACC_GYRO_PULL_UP_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_PULL_UP_EN(void *handle, ISM330DLC_ACC_GYRO_PULL_UP_EN_t *value);
 
 /*******************************************************************************
@@ -1596,7 +1513,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_START_CONFIG_t;
 
 #define  	ISM330DLC_ACC_GYRO_START_CONFIG_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_SensorHUB_Trigger_Sel(void *handle, ISM330DLC_ACC_GYRO_START_CONFIG_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SensorHUB_Trigger_Sel(void *handle, ISM330DLC_ACC_GYRO_START_CONFIG_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SensorHUB_Trigger_Sel(void *handle, ISM330DLC_ACC_GYRO_START_CONFIG_t *value);
 
 /*******************************************************************************
@@ -1611,7 +1528,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DATA_VAL_SEL_FIFO_t;
 
 #define  	ISM330DLC_ACC_GYRO_DATA_VAL_SEL_FIFO_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_DATA_VAL_SEL_FIFO(void *handle, ISM330DLC_ACC_GYRO_DATA_VAL_SEL_FIFO_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DATA_VAL_SEL_FIFO(void *handle, ISM330DLC_ACC_GYRO_DATA_VAL_SEL_FIFO_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DATA_VAL_SEL_FIFO(void *handle, ISM330DLC_ACC_GYRO_DATA_VAL_SEL_FIFO_t *value);
 
 /*******************************************************************************
@@ -1626,7 +1543,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_DRDY_ON_INT1_t;
 
 #define  	ISM330DLC_ACC_GYRO_DRDY_ON_INT1_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_DRDY_ON_INT1(void *handle, ISM330DLC_ACC_GYRO_DRDY_ON_INT1_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DRDY_ON_INT1(void *handle, ISM330DLC_ACC_GYRO_DRDY_ON_INT1_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DRDY_ON_INT1(void *handle, ISM330DLC_ACC_GYRO_DRDY_ON_INT1_t *value);
 
 /*******************************************************************************
@@ -2099,7 +2016,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_LIR_t;
 
 #define  	ISM330DLC_ACC_GYRO_LIR_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_LIR(void *handle, ISM330DLC_ACC_GYRO_LIR_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_LIR(void *handle, ISM330DLC_ACC_GYRO_LIR_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_LIR(void *handle, ISM330DLC_ACC_GYRO_LIR_t *value);
 
 /*******************************************************************************
@@ -2114,7 +2031,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_TAP_Z_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_TAP_Z_EN_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_TAP_Z_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Z_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TAP_Z_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Z_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_Z_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Z_EN_t *value);
 
 /*******************************************************************************
@@ -2129,7 +2046,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_TAP_Y_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_TAP_Y_EN_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_TAP_Y_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Y_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TAP_Y_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Y_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_Y_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_Y_EN_t *value);
 
 /*******************************************************************************
@@ -2144,7 +2061,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_TAP_X_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_TAP_X_EN_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_TAP_X_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_X_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TAP_X_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_X_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_X_EN(void *handle, ISM330DLC_ACC_GYRO_TAP_X_EN_t *value);
 /*******************************************************************************
 * Register      : TAP_CFG1
@@ -2158,7 +2075,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_SLOPE_FDS_t;
 
 #define  	ISM330DLC_ACC_GYRO_SLOPE_FDS_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_SLOPE_FDS(void *handle, ISM330DLC_ACC_GYRO_SLOPE_FDS_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SLOPE_FDS(void *handle, ISM330DLC_ACC_GYRO_SLOPE_FDS_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SLOPE_FDS(void *handle, ISM330DLC_ACC_GYRO_SLOPE_FDS_t *value);
 
 /*******************************************************************************
@@ -2173,7 +2090,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT_EN_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT_EN_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_INT_EN_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_INT_EN_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_INT_EN_t *value);
 
 /*******************************************************************************
@@ -2184,7 +2101,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_BASIC_INT(void *handle, ISM330DLC_ACC_GYRO_IN
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_TAP_THS_MASK  	0x1F
 #define  	ISM330DLC_ACC_GYRO_TAP_THS_POSITION  	0
-mems_status_t  ISM330DLC_ACC_GYRO_W_TAP_THS(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TAP_THS(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TAP_THS(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2201,7 +2118,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_SIXD_THS_t;
 
 #define  	ISM330DLC_ACC_GYRO_SIXD_THS_MASK  	0x60
-mems_status_t  ISM330DLC_ACC_GYRO_W_SIXD_THS(void *handle, ISM330DLC_ACC_GYRO_SIXD_THS_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SIXD_THS(void *handle, ISM330DLC_ACC_GYRO_SIXD_THS_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SIXD_THS(void *handle, ISM330DLC_ACC_GYRO_SIXD_THS_t *value);
 
 /*******************************************************************************
@@ -2216,7 +2133,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_D4D_t;
 
 #define  	ISM330DLC_ACC_GYRO_D4D_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_D4D(void *handle, ISM330DLC_ACC_GYRO_D4D_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_D4D(void *handle, ISM330DLC_ACC_GYRO_D4D_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_D4D(void *handle, ISM330DLC_ACC_GYRO_D4D_t *value);
 
 /*******************************************************************************
@@ -2227,7 +2144,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_D4D(void *handle, ISM330DLC_ACC_GYRO_D4D_t *v
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_SHOCK_MASK  	0x03
 #define  	ISM330DLC_ACC_GYRO_SHOCK_POSITION  	0
-mems_status_t  ISM330DLC_ACC_GYRO_W_SHOCK_Duration(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SHOCK_Duration(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SHOCK_Duration(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2238,7 +2155,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SHOCK_Duration(void *handle, u8_t *value);
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_QUIET_MASK  	0x0C
 #define  	ISM330DLC_ACC_GYRO_QUIET_POSITION  	2
-mems_status_t  ISM330DLC_ACC_GYRO_W_QUIET_Duration(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_QUIET_Duration(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_QUIET_Duration(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2249,7 +2166,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_QUIET_Duration(void *handle, u8_t *value);
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_DUR_MASK  	0xF0
 #define  	ISM330DLC_ACC_GYRO_DUR_POSITION  	4
-mems_status_t  ISM330DLC_ACC_GYRO_W_DUR(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_DUR(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_DUR(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2260,7 +2177,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_DUR(void *handle, u8_t *value);
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_WK_THS_MASK  	0x3F
 #define  	ISM330DLC_ACC_GYRO_WK_THS_POSITION  	0
-mems_status_t  ISM330DLC_ACC_GYRO_W_WK_THS(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_WK_THS(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_WK_THS(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2275,7 +2192,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_SINGLE_DOUBLE_TAP_t;
 
 #define  	ISM330DLC_ACC_GYRO_SINGLE_DOUBLE_TAP_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_SINGLE_DOUBLE_TAP_EV(void *handle, ISM330DLC_ACC_GYRO_SINGLE_DOUBLE_TAP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SINGLE_DOUBLE_TAP_EV(void *handle, ISM330DLC_ACC_GYRO_SINGLE_DOUBLE_TAP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SINGLE_DOUBLE_TAP_EV(void *handle, ISM330DLC_ACC_GYRO_SINGLE_DOUBLE_TAP_t *value);
 
 /*******************************************************************************
@@ -2286,7 +2203,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_SINGLE_DOUBLE_TAP_EV(void *handle, ISM330DLC_
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_SLEEP_DUR_MASK  	0x0F
 #define  	ISM330DLC_ACC_GYRO_SLEEP_DUR_POSITION  	0
-mems_status_t  ISM330DLC_ACC_GYRO_W_SLEEP_DUR(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SLEEP_DUR(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SLEEP_DUR(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2301,7 +2218,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_TIMER_HR_t;
 
 #define  	ISM330DLC_ACC_GYRO_TIMER_HR_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_TIMER_HR(void *handle, ISM330DLC_ACC_GYRO_TIMER_HR_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TIMER_HR(void *handle, ISM330DLC_ACC_GYRO_TIMER_HR_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TIMER_HR(void *handle, ISM330DLC_ACC_GYRO_TIMER_HR_t *value);
 
 /*******************************************************************************
@@ -2312,7 +2229,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_TIMER_HR(void *handle, ISM330DLC_ACC_GYRO_TIM
 *******************************************************************************/
 #define  	ISM330DLC_ACC_GYRO_WAKE_DUR_MASK  	0x60
 #define  	ISM330DLC_ACC_GYRO_WAKE_DUR_POSITION  	5
-mems_status_t  ISM330DLC_ACC_GYRO_W_WAKE_DUR(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_WAKE_DUR(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_WAKE_DUR(void *handle, u8_t *value);
 
 /*******************************************************************************
@@ -2325,7 +2242,7 @@ mems_status_t ISM330DLC_ACC_GYRO_R_WAKE_DUR(void *handle, u8_t *value);
 #define  	ISM330DLC_ACC_GYRO_FF_FREE_FALL_DUR_POSITION  	3
 #define  	ISM330DLC_ACC_GYRO_FF_WAKE_UP_DUR_MASK  	0x80
 #define  	ISM330DLC_ACC_GYRO_FF_WAKE_UP_DUR_POSITION  	7
-mems_status_t  ISM330DLC_ACC_GYRO_W_FF_Duration(void *handle, u8_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FF_Duration(void *handle, u8_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FF_Duration(void *handle, u8_t *value);
 
 
@@ -2347,7 +2264,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_FF_THS_t;
 
 #define  	ISM330DLC_ACC_GYRO_FF_THS_MASK  	0x07
-mems_status_t  ISM330DLC_ACC_GYRO_W_FF_THS(void *handle, ISM330DLC_ACC_GYRO_FF_THS_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FF_THS(void *handle, ISM330DLC_ACC_GYRO_FF_THS_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FF_THS(void *handle, ISM330DLC_ACC_GYRO_FF_THS_t *value);
 
 /*******************************************************************************
@@ -2362,7 +2279,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_TIMER_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_TIMER_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_TimerEvRouteInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TIMER_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TimerEvRouteInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TIMER_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TimerEvRouteInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TIMER_t *value);
 
 /*******************************************************************************
@@ -2377,7 +2294,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_TILT_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_TILT_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_TiltEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TILT_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TiltEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TILT_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TiltEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TILT_t *value);
 
 /*******************************************************************************
@@ -2392,7 +2309,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_6D_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_6D_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_6DEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_6D_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_6DEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_6D_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_6DEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_6D_t *value);
 
 /*******************************************************************************
@@ -2407,7 +2324,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_TAP_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_TAP_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TAP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TAP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TapEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_TAP_t *value);
 
 /*******************************************************************************
@@ -2422,7 +2339,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_FF_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_FF_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_FFEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_FF_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FFEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_FF_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FFEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_FF_t *value);
 
 /*******************************************************************************
@@ -2437,7 +2354,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_WU_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_WU_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_WUEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_WU_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_WUEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_WU_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_WUEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_WU_t *value);
 
 /*******************************************************************************
@@ -2452,7 +2369,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_SINGLE_TAP_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_SINGLE_TAP_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_SingleTapOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_SINGLE_TAP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SingleTapOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_SINGLE_TAP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SingleTapOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_SINGLE_TAP_t *value);
 
 /*******************************************************************************
@@ -2467,7 +2384,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT1_SLEEP_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT1_SLEEP_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_SleepEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_SLEEP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SleepEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_SLEEP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SleepEvOnInt1(void *handle, ISM330DLC_ACC_GYRO_INT1_SLEEP_t *value);
 
 /*******************************************************************************
@@ -2482,7 +2399,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_IRON_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_IRON_MASK  	0x01
-mems_status_t  ISM330DLC_ACC_GYRO_W_MagCorrection_Int2(void *handle, ISM330DLC_ACC_GYRO_INT2_IRON_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_MagCorrection_Int2(void *handle, ISM330DLC_ACC_GYRO_INT2_IRON_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_MagCorrection_Int2(void *handle, ISM330DLC_ACC_GYRO_INT2_IRON_t *value);
 
 /*******************************************************************************
@@ -2497,7 +2414,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_TILT_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_TILT_MASK  	0x02
-mems_status_t  ISM330DLC_ACC_GYRO_W_TiltEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TILT_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TiltEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TILT_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TiltEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TILT_t *value);
 
 /*******************************************************************************
@@ -2512,7 +2429,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_6D_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_6D_MASK  	0x04
-mems_status_t  ISM330DLC_ACC_GYRO_W_6DEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_6D_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_6DEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_6D_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_6DEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_6D_t *value);
 
 /*******************************************************************************
@@ -2527,7 +2444,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_TAP_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_TAP_MASK  	0x08
-mems_status_t  ISM330DLC_ACC_GYRO_W_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TAP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TAP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_TapEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_TAP_t *value);
 
 /*******************************************************************************
@@ -2542,7 +2459,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_FF_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_FF_MASK  	0x10
-mems_status_t  ISM330DLC_ACC_GYRO_W_FFEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_FF_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_FFEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_FF_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_FFEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_FF_t *value);
 
 /*******************************************************************************
@@ -2557,7 +2474,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_WU_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_WU_MASK  	0x20
-mems_status_t  ISM330DLC_ACC_GYRO_W_WUEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_WU_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_WUEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_WU_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_WUEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_WU_t *value);
 
 /*******************************************************************************
@@ -2572,7 +2489,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_SINGLE_TAP_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_SINGLE_TAP_MASK  	0x40
-mems_status_t  ISM330DLC_ACC_GYRO_W_SingleTapOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_SINGLE_TAP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SingleTapOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_SINGLE_TAP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SingleTapOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_SINGLE_TAP_t *value);
 
 /*******************************************************************************
@@ -2587,7 +2504,7 @@ typedef enum {
 } ISM330DLC_ACC_GYRO_INT2_SLEEP_t;
 
 #define  	ISM330DLC_ACC_GYRO_INT2_SLEEP_MASK  	0x80
-mems_status_t  ISM330DLC_ACC_GYRO_W_SleepEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_SLEEP_t newValue);
+mems_status_t ISM330DLC_ACC_GYRO_W_SleepEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_SLEEP_t newValue);
 mems_status_t ISM330DLC_ACC_GYRO_R_SleepEvOnInt2(void *handle, ISM330DLC_ACC_GYRO_INT2_SLEEP_t *value);
 
 /*******************************************************************************
