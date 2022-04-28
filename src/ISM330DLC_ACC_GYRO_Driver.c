@@ -465,7 +465,7 @@ mems_status_t ISM330DLC_ACC_GYRO_GetRawGyroData(void *handle, u8_t *buff)
  */
 static const long long ISM330DLC_GYRO_Sensitivity_List[5] = {
       4375,	/* FS @125 */
-      8750,	/* FS @245 */
+      8750,	/* FS @250 */
       17500,	/* FS @500 */
       35000,	/* FS @1000 */
       70000,	/* FS @2000 */
