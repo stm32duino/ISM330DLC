@@ -1516,14 +1516,14 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Enable_Double_Tap_Detection(ISM330DLC_In
   switch (int_pin)
   {
   case ISM330DLC_INT1_PIN:
-    if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt1( (void *)this, ISM330DLC_ACC_GYRO_INT1_TAP_ENABLED ) == MEMS_ERROR )
+    if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt1( (void *)this, ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_ENABLED ) == MEMS_ERROR )
     {
       return ISM330DLC_STATUS_ERROR;
     }
     break;
 
   case ISM330DLC_INT2_PIN:
-    if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt2( (void *)this, ISM330DLC_ACC_GYRO_INT2_TAP_ENABLED ) == MEMS_ERROR )
+    if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt2( (void *)this, ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_ENABLED ) == MEMS_ERROR )
     {
       return ISM330DLC_STATUS_ERROR;
     }
@@ -1543,13 +1543,13 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Enable_Double_Tap_Detection(ISM330DLC_In
 ISM330DLCStatusTypeDef ISM330DLCSensor::Disable_Double_Tap_Detection(void)
 {
   /* Disable double tap interrupt on INT1 pin. */
-  if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt1( (void *)this, ISM330DLC_ACC_GYRO_INT1_TAP_DISABLED ) == MEMS_ERROR )
+  if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt1( (void *)this, ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_DISABLED ) == MEMS_ERROR )
   {
     return ISM330DLC_STATUS_ERROR;
   }
 
   /* Disable double tap interrupt on INT2 pin. */
-  if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt2( (void *)this, ISM330DLC_ACC_GYRO_INT2_TAP_DISABLED ) == MEMS_ERROR )
+  if ( ISM330DLC_ACC_GYRO_W_TapEvOnInt2( (void *)this, ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_DISABLED ) == MEMS_ERROR )
   {
     return ISM330DLC_STATUS_ERROR;
   }
@@ -1970,7 +1970,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Get_Event_Status( ISM330DLC_Event_Status
     return ISM330DLC_STATUS_ERROR;
   }
 
-  if(ReadReg(ISM330DLC_ACC_GYRO_FUNC_SRC, &Func_Src ) == ISM330DLC_STATUS_ERROR )
+  if(ReadReg(ISM330DLC_ACC_GYRO_FUNC_SRC1, &Func_Src ) == ISM330DLC_STATUS_ERROR )
   {
     return ISM330DLC_STATUS_ERROR;
   }
@@ -2014,7 +2014,7 @@ ISM330DLCStatusTypeDef ISM330DLCSensor::Get_Event_Status( ISM330DLC_Event_Status
     }
   }
 
-  if((Md1_Cfg & ISM330DLC_ACC_GYRO_INT1_TAP_MASK) || (Md2_Cfg & ISM330DLC_ACC_GYRO_INT2_TAP_MASK))
+  if((Md1_Cfg & ISM330DLC_ACC_GYRO_INT1_DOUBLE_TAP_MASK) || (Md2_Cfg & ISM330DLC_ACC_GYRO_INT2_DOUBLE_TAP_MASK))
   {
     if((Tap_Src & ISM330DLC_ACC_GYRO_DOUBLE_TAP_EV_STATUS_MASK))
     {

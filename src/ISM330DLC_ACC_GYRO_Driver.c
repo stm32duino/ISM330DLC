@@ -6040,7 +6040,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_MASTER_CMD_CODE(void *handle, u8_t newValue)
   if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
     return MEMS_ERROR;
 
-  value &= ~ISM330DLC_ACC_GYRO_MASTER_CMD_CODE_MASK;
+  value &= (u8_t)~ISM330DLC_ACC_GYRO_MASTER_CMD_CODE_MASK;
   value |= newValue;
 
   if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
@@ -6080,7 +6080,7 @@ mems_status_t ISM330DLC_ACC_GYRO_W_SENS_SYNC_SPI_ERROR_CODE(void *handle, u8_t n
   if( !ISM330DLC_ACC_GYRO_ReadReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
     return MEMS_ERROR;
 
-  value &= ~ISM330DLC_ACC_GYRO_SENS_SYNC_SPI_ERROR_CODE_MASK;
+  value &= (u8_t)~ISM330DLC_ACC_GYRO_SENS_SYNC_SPI_ERROR_CODE_MASK;
   value |= newValue;
 
   if( !ISM330DLC_ACC_GYRO_WriteReg(handle, ISM330DLC_ACC_GYRO_MD2_CFG, &value, 1) )
